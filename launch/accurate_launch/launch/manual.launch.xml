@@ -1,0 +1,31 @@
+<launch>
+    <node pkg="joy" exec="joy_node"/>
+
+    <node pkg="dualsense_ros2" exec="dualsense_ros2_node" name="dualsense_ros2_node">
+        <remap from="/joy" to="/joy"/>
+
+        <remap from="/dualsense/twist" to="/planning/cmd_vel"/>
+        <remap from="/dualsense/f" to="/dualsense/f"/>
+
+        <param name="max_pow" value="2.0" />
+    </node>
+
+    <node pkg="omni_vel_ros2" exec="omni_vel_ros2_node" name="omni_vel_ros2_node">
+        <remap from="/cmd_vel" to="/planning/cmd_vel"/>
+        <remap from="/posture" to="/not_used_direct_posture"/>
+        <remap from="/target_output" to="/control/rpms"/>
+
+        <param name="robot_radius" value="0.25"/>
+        <param name="wheel_radius" value="0.1"/>
+        <param name="wheel_rad_1" value="330.0"/>
+        <param name="wheel_rad_2" value="90.0"/>
+        <param name="wheel_rad_3" value="210.0"/>
+        <param name="pwm_mode" value="false"/>
+    </node>
+
+    <node pkg="serial_controller" exec="serial_controller_node" name="serial_controller_node">
+        <remap from="/to_pico" to="/control/rpms"/>
+        
+        <param name="port_path" value="/dev/ttyACM0"/>
+    </node>
+</launch>

@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find-pkg-share moti_auto_launch)/launch/planning.launch.xml"/>
+    <include file="$(find-pkg-share moti_auto_launch)/launch/perception.launch.xml"/>
+    <include file="$(find-pkg-share moti_auto_launch)/launch/sim/turtlesim_connector.launch.xml"/>
+    <include file="$(find-pkg-share moti_auto_launch)/launch/sim/rviz.launch.xml"/>
+    <include file="$(find-pkg-share moti_auto_launch)/launch/localization/tf.launch.xml"/>
+</launch>

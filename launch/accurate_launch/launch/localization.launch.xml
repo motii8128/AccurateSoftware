@@ -1,0 +1,4 @@
+<launch>
+    <!-- <include file="$(find-pkg-share moti_auto_launch)/launch/localization/odom_poser_ros2.launch.xml"/> -->
+    <include file="$(find-pkg-share accurate_launch)/launch/localization/motiodom.launch.xml"/>
+</launch>

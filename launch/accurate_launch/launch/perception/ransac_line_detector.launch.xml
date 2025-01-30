@@ -1,0 +1,10 @@
+<launch>
+    <node pkg="ransac_line_detector" exec="ransac_line_detector_node">
+        <remap from="/pointcloud" to="/voxel_grid_filter"/>
+        <remap from="/lines" to="/perception/line"/>
+
+        <param name="detect_num" value="2"/>
+        <param name="max_iter_num" value="1000"/>
+        <param name="threshold" value="0.1"/>
+    </node>
+</launch>

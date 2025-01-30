@@ -1,0 +1,6 @@
+<launch>
+    <include file="$(find-pkg-share moti_auto_launch)/launch/control/wpc_app_bridge.launch.xml"/>
+    <include file="$(find-pkg-share moti_auto_launch)/launch/control/omni_vel_ros2.launch.xml"/>
+    <include file="$(find-pkg-share moti_auto_launch)/launch/control/serial_controller.launch.xml"/>
+    <!-- <include file="$(find-pkg-share moti_auto_launch)/launch/control/dualsense_ros2.launch.xml"/> -->
+</launch>

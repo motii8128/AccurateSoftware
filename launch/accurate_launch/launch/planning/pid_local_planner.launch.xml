@@ -1,0 +1,13 @@
+<launch>
+    <node pkg="pid_local_planner" exec="pid_local_planner_node">
+        <remap from="/path" to="/planning/path"/>
+        <remap from="/current_pose" to="/localization/current"/>
+        <remap from="/cmd_vel" to="/planning/cmd_vel"/>
+
+        <param name="p_gain" value="1.5"/>
+        <param name="i_gain" value="0.001"/>
+        <param name="d_gain" value="0.001"/>
+        <param name="max_limit" value="3.0"/>
+        <param name="min_limit" value="-3.0"/>
+    </node>
+</launch>

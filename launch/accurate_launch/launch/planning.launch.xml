@@ -1,0 +1,4 @@
+<launch>
+    <include file="$(find-pkg-share moti_auto_launch)/launch/planning/linear_path_planner.launch.xml"/>
+    <include file="$(find-pkg-share moti_auto_launch)/launch/planning/pid_local_planner.launch.xml"/>
+</launch>
