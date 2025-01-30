@@ -3,8 +3,7 @@
 
 #include "types.hpp"
 #include "posture_ekf.hpp"
-#include "ydlidar.hpp"
-#include "icp.hpp"
+#include "pcl_ndt.hpp"
 
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/imu.hpp>
@@ -25,18 +24,15 @@ namespace motiodom
         explicit MotiOdom(const rclcpp::NodeOptions& option=rclcpp::NodeOptions());
 
         void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg);
-        void timer_callback();
+        void lidar_callback();
 
         private:
         rclcpp::TimerBase::SharedPtr timer_;
-        rclcpp::Publisher<sensor_msgs::msg::PointCloud>::SharedPtr ydlidar_publisher_;
         rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_publisher_;
         rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr occupancy_grid_publisher_;
         rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_subscriber_;
         rclcpp::Time prev_imu_callback_time;
         std::shared_ptr<ImuPostureEKF> imu_ekf_;
-        std::shared_ptr<YDLidarDriver> ydlidar_;
-        std::shared_ptr<ICP> icp_;
         Quat imu_posture_;
         Vec3 imu_posture_euler_;
         bool set_source_;
