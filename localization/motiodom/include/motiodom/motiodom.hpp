@@ -24,24 +24,26 @@ namespace motiodom
         explicit MotiOdom(const rclcpp::NodeOptions& option=rclcpp::NodeOptions());
 
         void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg);
-        void lidar_callback();
+        void lidar_callback(const sensor_msgs::msg::PointCloud::SharedPtr msg);
 
         private:
-        rclcpp::TimerBase::SharedPtr timer_;
         rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_publisher_;
         rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr occupancy_grid_publisher_;
         rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_subscriber_;
+        rclcpp::Subscription<sensor_msgs::msg::PointCloud>::SharedPtr pointcloud_subscriber_;
         rclcpp::Time prev_imu_callback_time;
         std::shared_ptr<ImuPostureEKF> imu_ekf_;
+        std::shared_ptr<NDT> ndt_;
         Quat imu_posture_;
-        Vec3 imu_posture_euler_;
-        bool set_source_;
+        bool initialized_ndt_;
 
         // パラメーター
         bool enable_reverse_;
-        int icp_max_iter_;
-        float icp_threshold_;
-
+        float voxel_grid_leafsize_;
+        float eps_;
+        float step_size_;
+        float resolution_;
+        int max_iter_;
     };
 }
 
