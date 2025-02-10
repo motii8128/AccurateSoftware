@@ -17,6 +17,8 @@ namespace motiodom
             std::bind(&MotiOdom::lidar_callback, this, _1)
         );
 
+        map_cloud_publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud2>("/map_cloud", rclcpp::SystemDefaultsQoS());
+
         odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("/odom", rclcpp::SystemDefaultsQoS());
 
         occupancy_grid_publisher_ = this->create_publisher<nav_msgs::msg::OccupancyGrid>("/map", rclcpp::SystemDefaultsQoS());
@@ -99,12 +101,14 @@ namespace motiodom
         {
             ndt_->compute(msg, imu_posture_);
             const auto pose = ndt_->getTranslation();
+            const auto map_pointcloud = ndt_->getMapPointCloud();
 
             odom.pose.pose.position.x = pose.x();
             odom.pose.pose.position.y = pose.y();
             odom.pose.pose.position.z = pose.z();
 
             odom_publisher_->publish(odom);
+            map_cloud_publisher_->publish(map_pointcloud);
         }
     }
 }

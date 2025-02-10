@@ -1,5 +1,5 @@
 <launch>
-    <include file="$(find-pkg-share accurate_launch)/launch/sensing/imu.launch.xml"/>
+    <!-- <include file="$(find-pkg-share accurate_launch)/launch/sensing/imu.launch.xml"/> -->
     <include file="$(find-pkg-share accurate_launch)/launch/sensing/t_mini_pro_ros2.launch.xml"/>
     <!-- <include file="$(find-pkg-share moti_auto_launch)/launch/sensing/voxel_grid_filter_ros2.launch.xml"/> -->
 </launch>

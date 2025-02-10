@@ -10,6 +10,8 @@
 #include <pcl/filters/voxel_grid.h>
 
 #include <sensor_msgs/msg/point_cloud.hpp>
+#include <sensor_msgs/msg/point_cloud2.hpp>
+#include <geometry_msgs/msg/point32.hpp>
 
 namespace motiodom
 {
@@ -37,16 +39,20 @@ namespace motiodom
         /// @return Vec3の移動量
         Vec3 getTranslation();
 
+        /// @brief ndtによってできたマップ点群を取得する
+        /// @return sensor_msgs/msg/PointCloud2のROS2メッセージ
+        sensor_msgs::msg::PointCloud2 getMapPointCloud();
+
         private:
         /// @brief ボクセルグリッドフィルターを使ってダウンサンプリングする
         /// @param pointcloud 入力点群
-        pcl::PointCloud<pcl::PointXYZ>::Ptr dowmSampling(const pcl::PointCloud<pcl::PointXYZ>::Ptr &pointcloud)
+        pcl::PointCloud<pcl::PointXYZ>::Ptr dowmSampling(const pcl::PointCloud<pcl::PointXYZ>::Ptr &pointcloud, float voxel_grid_leafsize)
         {
             pcl::PointCloud<pcl::PointXYZ>::Ptr tmp(new pcl::PointCloud<pcl::PointXYZ>);
 
             pcl::VoxelGrid<pcl::PointXYZ> vg_filter;
             vg_filter.setInputCloud(pointcloud);
-            vg_filter.setLeafSize(voxel_grid_leafsize_, voxel_grid_leafsize_,voxel_grid_leafsize_);
+            vg_filter.setLeafSize(voxel_grid_leafsize, voxel_grid_leafsize,voxel_grid_leafsize);
             vg_filter.filter(*tmp);
 
             return tmp;
@@ -62,6 +68,8 @@ namespace motiodom
 
             return new_pcl;
         }
+
+        
 
         float voxel_grid_leafsize_;
         float eps_;

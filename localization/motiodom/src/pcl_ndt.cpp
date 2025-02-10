@@ -27,7 +27,7 @@ namespace motiodom
 
         if(map_pointcloud_->empty() || new_pointcloud->empty()) return;
 
-        new_pointcloud = dowmSampling(new_pointcloud);
+        new_pointcloud = dowmSampling(new_pointcloud, voxel_grid_leafsize_);
 
         Eigen::Matrix4f init_guess = Eigen::Matrix4f::Identity();
         const Mat3x3 rotation_mat = posture.toRotationMatrix();
@@ -37,6 +37,8 @@ namespace motiodom
         ndt_->setInputSource(new_pointcloud);
         ndt_->setInputTarget(map_pointcloud_);
 
+        translated_pointcloud_->clear();
+
         ndt_->align(*translated_pointcloud_, init_guess);
 
         const Eigen::Matrix4f T = ndt_->getFinalTransformation();
@@ -45,11 +47,20 @@ namespace motiodom
         last_pose_(2) = T(2, 3);
 
         *map_pointcloud_ += *translated_pointcloud_;
-        map_pointcloud_ = dowmSampling(map_pointcloud_);
+        map_pointcloud_ = dowmSampling(map_pointcloud_, 0.1);
     }
 
     Vec3 NDT::getTranslation()
     {
         return last_pose_;
+    }
+
+    sensor_msgs::msg::PointCloud2 NDT::getMapPointCloud()
+    {
+        sensor_msgs::msg::PointCloud2 ros_cloud;
+        pcl::toROSMsg(*map_pointcloud_, ros_cloud);
+        ros_cloud.header.frame_id = "map";
+
+        return ros_cloud;
     }
 }
