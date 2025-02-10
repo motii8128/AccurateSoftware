@@ -1,69 +1,58 @@
-#include "serial_controller/serial_controller.hpp"
+#include "accurate_serial_connector/serial_controller.hpp"
 
 namespace serial_controller
 {
-    SerialController::SerialController(const rclcpp::NodeOptions option) : Node("SerialController", option)
+    SerialController::SerialController(const rclcpp::NodeOptions option) : Node("AccurateSerialController", option)
     {
-        sub_ = this->create_subscription<std_msgs::msg::Int64MultiArray>(
-            "/to_pico", 
-            rclcpp::SystemDefaultsQoS(), 
-            std::bind(&SerialController::topic_callback, this, _1));
+        sub_wheel_ = this->create_subscription<std_msgs::msg::Int64MultiArray>(
+            "/wheel", 
+            0, 
+            std::bind(&SerialController::wheel_callback, this, _1));
 
-        timer_ = this->create_wall_timer(20ms, std::bind(&SerialController::timer_callback, this));
+        sub_machine_ = this->create_subscription<std_msgs::msg::Int64MultiArray>(
+            "/machine",
+            0,
+            std::bind(&SerialController::machine_callback, this, _1)
+        );
+
+        timer_ = this->create_wall_timer(10ms, std::bind(&SerialController::timer_callback, this));
 
         this->declare_parameter("port_path", "/dev/ttyACM0");
-        this->get_parameter("port_path", port_path_param);
+        this->get_parameter("port_path", port_path_param_);
+        wheel_cmd_ = nullptr;
+        machine_cmd_ = nullptr;
 
-        serial = std::make_shared<SerialHandler>();
+        serial_ = std::make_shared<SerialHandler>();
 
-        auto er = serial->OpenPort(port_path_param);
+        auto serial_open_result = serial_->OpenPort(port_path_param_);
 
-        if(er)
+        if(serial_open_result)
         {
-            RCLCPP_INFO(this->get_logger(), "Start SerialController");
+            RCLCPP_INFO(this->get_logger(), "Start AccurateSerialController");
         }
         else
         {
-            RCLCPP_ERROR(this->get_logger(), "Failed to open serial : %s", port_path_param.c_str());
-            serial->ClosePort();
+            RCLCPP_ERROR(this->get_logger(), "Failed to open serial : %s", port_path_param_.c_str());
+            serial_->ClosePort();
         }
-
-        str_flag = false;
+        
     }
 
-    void SerialController::topic_callback(const std_msgs::msg::Int64MultiArray::SharedPtr msg)
+    void SerialController::wheel_callback(const std_msgs::msg::Int64MultiArray::SharedPtr msg)
     {
-        auto nmsg = *msg;
-        if(abs(nmsg.data[0] < 30))nmsg.data[0] = 0;
-        if(abs(nmsg.data[1] < 30))nmsg.data[1] = 0;
-        if(abs(nmsg.data[2] < 30))nmsg.data[2] = 0;
+        wheel_cmd_ = msg;
+    }
 
-        std::string str = std::to_string(msg->data[0]+1500) + ',' + std::to_string(msg->data[1]+1500) + ',' + std::to_string(msg->data[2]+1500) + 'e';
-
-        tx = str;
-
-        str_flag = true;
+    void SerialController::machine_callback(const std_msgs::msg::Int64MultiArray::SharedPtr msg)
+    {
+        machine_cmd_ = msg;
     }
 
     void SerialController::timer_callback()
     {
-        if(str_flag)
+        if(wheel_cmd_ != nullptr && machine_cmd_ != nullptr)
         {
-            bool err = serial->WritePort(tx);
-
-            if(err)
-            {
-                // RCLCPP_INFO(this->get_logger(), "Write %s", tx.c_str());
-                auto read_str = serial->ReadPort();
-                RCLCPP_INFO(this->get_logger(), "%s", read_str.c_str());
-            }
-            else
-            {
-                RCLCPP_ERROR(this->get_logger(), "Failed to write serial : %s", tx.c_str());
-                serial->ClosePort();
-            }
-
-            str_flag = false;
+            const auto m1 = machine_cmd_->data[0];
         }
     }
 }
