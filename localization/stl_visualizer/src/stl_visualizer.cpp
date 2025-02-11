@@ -6,7 +6,7 @@ namespace stl_visualizer
     {
         publisher_ = this->create_publisher<visualization_msgs::msg::Marker>("/robot_model", 0);
 
-        timer_ = this->create_wall_timer(std::chrono::milliseconds(10), std::bind(&StlVisualizer::timer_callback, this));
+        timer_ = this->create_wall_timer(std::chrono::milliseconds(100), std::bind(&StlVisualizer::timer_callback, this));
 
         marker_ = visualization_msgs::msg::Marker();
 
