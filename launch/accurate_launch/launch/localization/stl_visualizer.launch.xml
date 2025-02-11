@@ -5,7 +5,7 @@
         <remap from="/robot_model" to="/visualize/robot"/>
 
         <param name="model_path" value="$(var robot_3d_model_path)"/>
-        <param name="frame_id" value="robot"/>
+        <param name="frame_id" value="base_link"/>
         <param name="namespace" value="bunai2025_wheel"/>
         <param name="scale" value="0.001"/>
         <param name="color.red" value="1.0"/>
@@ -14,5 +14,5 @@
         <param name="color.alpha" value="1.0"/>
     </node>
 
-    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_robot" args="0 0 0 0 0 0 1 base_link robot" />
+    <!-- <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_robot" args="0 0 0 0 0 0 1 base_link robot" /> -->
 </launch>

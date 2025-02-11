@@ -23,13 +23,13 @@ namespace localization_sim
 
     void LocalizationSim::topic_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
     {
-        yaw_ += msg->angular.z * 0.5;
+        yaw_ += msg->angular.z * 0.05;
 
         tf2::Quaternion q;
         q.setRPY(0.0, 0.0, yaw_);
 
-        pose_.transform.translation.x += msg->linear.x * 0.5;
-        pose_.transform.translation.y += msg->linear.y * 0.5;
+        pose_.transform.translation.x += msg->linear.x * 0.05;
+        pose_.transform.translation.y += msg->linear.y * 0.05;
         pose_.transform.translation.z = 0.0;
 
         pose_.transform.rotation.w = q.w();
