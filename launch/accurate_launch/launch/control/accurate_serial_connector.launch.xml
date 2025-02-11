@@ -1,0 +1,12 @@
+<launch>
+    <node pkg="accurate_serial_connector" exec="accurate_serial_connector_node" name="accurate_serial_connector">
+        <remap from="/wheel" to="/control/wheel"/>
+        <remap from="/machine" to="/control/machine"/>
+
+        <remap from="/encoder/updown" to="/sensing/encoder/updown"/>
+        <remap from="/encoder/frontback" to="/sensing/encoder/frontback"/>
+        <remap from="/hand_ampare" to="/sensing/hand_ampare"/>
+        
+        <param name="port_path" value="/dev/ttyACM0"/>
+    </node>
+</launch>
