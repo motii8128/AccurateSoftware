@@ -12,7 +12,7 @@ namespace stl_visualizer
 
         marker_.header.frame_id = this->declare_parameter("frame_id", "robot");
         marker_.ns = this->declare_parameter("namespace", "2025_bunai");
-        marker_.id = 1;
+        marker_.id = 0;
         marker_.type = visualization_msgs::msg::Marker::MESH_RESOURCE;
         marker_.action = visualization_msgs::msg::Marker::ADD;
 
