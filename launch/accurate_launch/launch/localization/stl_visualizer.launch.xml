@@ -1,0 +1,18 @@
+<launch>    
+    <arg name="robot_3d_model_path" default="$(find-pkg-share accurate_launch)/model/robot.stl"/>
+
+    <node pkg="stl_visualizer" exec="stl_visualizer_node" name="robot_visualizer_node" >
+        <remap from="/robot_model" to="/visualize/robot"/>
+        
+        <param name="model_path" value="$(var robot_3d_model_path)"/>
+        <param name="frame_id" value="robot"/>
+        <param name="namespace" value="bunai2025_wheel"/>
+        <param name="scale" value="1.0"/>
+        <param name="color.red" value="1.0"/>
+        <param name="color.blue" value="1.0"/>
+        <param name="color.green" value="1.0"/>
+        <param name="color.alpha" value="1.0"/>
+    </node>
+
+    <node pkg="tf2_ros" exec="static_transform_publisher" name="base_link_to_robot" args="0 0 0 0 0 0 0 base_link robot" />
+</launch>
