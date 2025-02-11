@@ -17,15 +17,12 @@ namespace omni_vel_ros2
         public:
         OmniVelROS2(const rclcpp::NodeOptions& option=rclcpp::NodeOptions());
         void cmd_callback(const geometry_msgs::msg::Twist::SharedPtr msg);
-        void posture_callback(const geometry_msgs::msg::Vector3::SharedPtr msg);
 
         private:
         rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_subscriber;
-        rclcpp::Subscription<geometry_msgs::msg::Vector3>::SharedPtr posture_subscriber;
         rclcpp::Publisher<std_msgs::msg::Int64MultiArray>::SharedPtr publisher_;
         std::shared_ptr<OmniWheel<double>> omni_wheel;
 
-        geometry_msgs::msg::Vector3 posture;
 
         double robot_radius_param, wheel_radius_param;
         std::array<double, 3> wheels_rad;

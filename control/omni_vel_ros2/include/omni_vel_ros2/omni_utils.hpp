@@ -19,13 +19,13 @@ namespace omni_vel_ros2
             pwm_mode_ = pwm_mode;
         }
 
-        std::array<T, 3> calculation(T x_vel, T y_vel, T rotation_vel, T now_yaw)
+        std::array<T, 3> calculation(T x_vel, T y_vel, T rotation_vel)
         {
             std::array<T, 3> rpm_array;
 
-            T wheel_posture_0 = wheel_rad_[0] + now_yaw;
-            T wheel_posture_1 = wheel_rad_[1] + now_yaw;
-            T wheel_posture_2 = wheel_rad_[2] + now_yaw;
+            T wheel_posture_0 = wheel_rad_[0];
+            T wheel_posture_1 = wheel_rad_[1];
+            T wheel_posture_2 = wheel_rad_[2];
 
             T wheel_0_v = -1.0*std::sin(wheel_posture_0)*x_vel + std::cos(wheel_posture_0)*y_vel + robot_radius_ * rotation_vel;
             T wheel_1_v = -1.0*std::sin(wheel_posture_1)*x_vel + std::cos(wheel_posture_1)*y_vel + robot_radius_ * rotation_vel;

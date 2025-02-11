@@ -6,17 +6,11 @@ namespace omni_vel_ros2
     {
         cmd_subscriber = this->create_subscription<geometry_msgs::msg::Twist>(
             "/cmd_vel",
-            rclcpp::SystemDefaultsQoS(),
+            0,
             std::bind(&OmniVelROS2::cmd_callback, this, _1)
         );
 
-        posture_subscriber = this->create_subscription<geometry_msgs::msg::Vector3>(
-            "/posture",
-            rclcpp::SystemDefaultsQoS(),
-            std::bind(&OmniVelROS2::posture_callback, this, _1)
-        );
-
-        publisher_ = this->create_publisher<std_msgs::msg::Int64MultiArray>("/target_output", rclcpp::SystemDefaultsQoS());
+        publisher_ = this->create_publisher<std_msgs::msg::Int64MultiArray>("/target_output", 0);
 
         this->declare_parameter("robot_radius", 1.0);
         this->get_parameter("robot_radius", robot_radius_param);
@@ -31,10 +25,6 @@ namespace omni_vel_ros2
         this->declare_parameter("pwm_mode", false);
         this->get_parameter("pwm_mode", pwm_flag);
 
-        posture.x = 0.0;
-        posture.y = 0.0;
-        posture.z = 0.0;
-
         wheels_rad[0] = wheels_rad[0] * (M_PI / 180.0);
         wheels_rad[1] = wheels_rad[1] * (M_PI / 180.0);
         wheels_rad[2] = wheels_rad[2] * (M_PI / 180.0);
@@ -44,16 +34,9 @@ namespace omni_vel_ros2
         RCLCPP_INFO(this->get_logger(), "Start OmniVelROS2");
     }
 
-    void OmniVelROS2::posture_callback(const geometry_msgs::msg::Vector3::SharedPtr msg)
-    {
-        posture.x = msg->x;
-        posture.y = msg->y;
-        posture.z = msg->z;
-    }
-
     void OmniVelROS2::cmd_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
     {
-        auto target_rpm = omni_wheel->calculation(-msg->linear.y, msg->linear.x, -msg->angular.z, posture.z);
+        auto target_rpm = omni_wheel->calculation(msg->linear.y, msg->linear.x, msg->angular.z);
 
         auto new_msg = std_msgs::msg::Int64MultiArray();
         new_msg.data.push_back(static_cast<int64_t>(target_rpm[0]));
