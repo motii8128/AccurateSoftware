@@ -1,7 +1,0 @@
-<launch>
-    <node pkg="turtlesim" exec="turtlesim_node"></node>
-    <node pkg="turtlesim_connector" exec="turtlesim_connector_node">
-        <remap from="/cmd_vel" to="/cmd_vel"/>
-        <remap from="/current" to="/current/merged"/>
-    </node>
-</launch>
