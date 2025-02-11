@@ -2,4 +2,6 @@
     <include file="$(find-pkg-share accurate_launch)/launch/control/dualsense_ros2.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/localization/stl_visualizer.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/localization/localization_sim.launch.xml"/>
+    <include file="$(find-pkg-share accurate_launch)/launch/planning/linear_path_planner.launch.xml"/>
+    <include file="$(find-pkg-share accurate_launch)/launch/planning/pid_local_planner.launch.xml"/>
 </launch>

@@ -7,7 +7,7 @@
         <param name="p_gain" value="1.5"/>
         <param name="i_gain" value="0.001"/>
         <param name="d_gain" value="0.001"/>
-        <param name="max_limit" value="3.0"/>
-        <param name="min_limit" value="-3.0"/>
+        <param name="max_limit" value="1.0"/>
+        <param name="min_limit" value="-1.0"/>
     </node>
 </launch>

@@ -23,14 +23,22 @@ namespace localization_sim
 
     void LocalizationSim::topic_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
     {
+        tf2::Quaternion prev_q(pose_.transform.rotation.x, pose_.transform.rotation.y, pose_.transform.rotation.z, pose_.transform.rotation.w);
+        tf2::Matrix3x3 mat(prev_q);
+        double r, p, ya;
+        mat.getRPY(r, p, ya);
+
+        const auto x = cos(-ya)*msg->linear.x + sin(-ya) * msg->linear.y;
+        const auto y = -1.0 * sin(-ya)*msg->linear.x + cos(-ya) * msg->linear.y;
+
+        pose_.transform.translation.x += x * 0.05;
+        pose_.transform.translation.y += y * 0.05;
+        pose_.transform.translation.z = 0.0;
+
         yaw_ += msg->angular.z * 0.05;
 
         tf2::Quaternion q;
         q.setRPY(0.0, 0.0, yaw_);
-
-        pose_.transform.translation.x += msg->linear.x * 0.05;
-        pose_.transform.translation.y += msg->linear.y * 0.05;
-        pose_.transform.translation.z = 0.0;
 
         pose_.transform.rotation.w = q.w();
         pose_.transform.rotation.x = q.x();
