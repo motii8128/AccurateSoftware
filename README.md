@@ -1,5 +1,9 @@
 # AccurateSoftware
 
+[accurate.webm](https://github.com/user-attachments/assets/ad020cdf-b36b-445b-a6b0-4766c73eba08)
+
+
+# Architecture
 ```mermaid
 graph LR;
 subgraph 自己位置推定
