@@ -1,0 +1,9 @@
+<launch>
+    <node pkg="localization_sim" exec="localization_sim_node">
+        <remap from="/cmd_vel" to="/planning/cmd_vel"/>
+        <remap from="/pose" to="/localization/pose"/>
+
+        <param name="frame_id" value="map"/>
+        <param name="child_frame_id" value="base_link"/>
+    </node>
+</launch>
