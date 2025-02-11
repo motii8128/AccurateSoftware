@@ -15,6 +15,10 @@ namespace serial_controller
             std::bind(&SerialController::machine_callback, this, _1)
         );
 
+        pub_updown_encoder_ = this->create_publisher<std_msgs::msg::Float32>("/encoder/updown", 0);
+        pub_frontback_encoder_ = this->create_publisher<std_msgs::msg::Float32>("/encoder/frontback", 0);
+        pub_hand_ampare_ = this->create_publisher<std_msgs::msg::Float32>("/hand_ampare", 0);
+
         timer_ = this->create_wall_timer(10ms, std::bind(&SerialController::timer_callback, this));
 
         this->declare_parameter("port_path", "/dev/ttyACM0");
@@ -53,6 +57,46 @@ namespace serial_controller
         if(wheel_cmd_ != nullptr && machine_cmd_ != nullptr)
         {
             const auto m1 = machine_cmd_->data[0];
+            const auto m2 = machine_cmd_->data[1];
+            const auto m3 = machine_cmd_->data[2];
+            const auto w1 = wheel_cmd_->data[0];
+            const auto w2 = wheel_cmd_->data[1];
+            const auto w3 = wheel_cmd_->data[2];
+
+            std::string tx = std::to_string(m1) + ',' + std::to_string(m2) + ',' + std::to_string(m3) + ','
+                + std::to_string(w1) + ',' + std::to_string(w2) + ',' + std::to_string(w3) + 'e';
+
+            const auto serial_write_result = serial_->WritePort(tx);
+            if(serial_write_result)
+            {
+                const auto read_string = serial_->ReadPort();
+
+                std::vector<int> values;
+                std::stringstream ss(read_string);
+                std::string tmp;
+
+                while(std::getline(ss, tmp, ','))
+                {
+                    values.push_back(std::stoi(tmp));
+                }
+
+                if(values.size() == 3)
+                {
+                    std_msgs::msg::Float32 updown, frontback, ampare;
+                    updown.data = values[0];
+                    frontback.data = values[1];
+                    ampare.data = values[2];
+
+                    pub_updown_encoder_->publish(updown);
+                    pub_frontback_encoder_->publish(frontback);
+                    pub_hand_ampare_->publish(ampare);
+                }
+            }
+            else
+            {
+                RCLCPP_ERROR(this->get_logger(), "Failed to write serial.");
+            }
+
         }
     }
 }
