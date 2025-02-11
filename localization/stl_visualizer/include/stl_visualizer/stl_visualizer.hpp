@@ -4,6 +4,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <visualization_msgs/msg/marker.hpp>
 #include <chrono>
+#include <string>
 
 namespace stl_visualizer
 {
