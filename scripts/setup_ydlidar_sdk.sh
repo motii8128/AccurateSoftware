@@ -25,3 +25,5 @@ make
 echo "----- Install SDK -----"
 
 sudo make install
+
+echo "----- Finished setup YD Lidar -----"
