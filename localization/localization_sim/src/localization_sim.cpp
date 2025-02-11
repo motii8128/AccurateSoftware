@@ -40,6 +40,7 @@ namespace localization_sim
 
     void LocalizationSim::timer_callback()
     {
+        pose_.header.stamp = this->get_clock()->now();
         tf_broadcaster_->sendTransform(pose_);
         geometry_msgs::msg::PoseStamped p;
         p.header.frame_id = pose_.child_frame_id;
