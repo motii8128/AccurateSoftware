@@ -10,7 +10,7 @@ cd /home/$USER/
 
 echo "----- Clone YDLidar-SDK -----"
 
-git clone https://github.com/YDLidar-SDK.git
+git clone https://github.com/YDLIDAR/YDLidar-SDK.git
 cd ./YDLidar-SDK
 
 mkdir build
