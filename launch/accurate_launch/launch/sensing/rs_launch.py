@@ -21,8 +21,8 @@ from launch.actions import DeclareLaunchArgument, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
 
 
-configurable_parameters = [{'name': 'camera_name',                  'default': 'sensing', 'description': 'camera unique name'},
-                           {'name': 'camera_namespace',             'default': 'realsense', 'description': 'namespace for camera'},
+configurable_parameters = [{'name': 'camera_name',                  'default': 'realsense', 'description': 'camera unique name'},
+                           {'name': 'camera_namespace',             'default': 'sensing', 'description': 'namespace for camera'},
                            {'name': 'serial_no',                    'default': "''", 'description': 'choose device by serial number'},
                            {'name': 'usb_port_id',                  'default': "''", 'description': 'choose device by usb port id'},
                            {'name': 'device_type',                  'default': "''", 'description': 'choose device by type'},
@@ -57,8 +57,8 @@ configurable_parameters = [{'name': 'camera_name',                  'default': '
                            {'name': 'depth_module.gain.2',          'default': '16', 'description': 'Depth module second gain value. Used for hdr_merge filter'},
                            {'name': 'enable_sync',                  'default': 'false', 'description': "'enable sync mode'"},
                            {'name': 'enable_rgbd',                  'default': 'false', 'description': "'enable rgbd topic'"},
-                           {'name': 'enable_gyro',                  'default': 'false', 'description': "'enable gyro stream'"},
-                           {'name': 'enable_accel',                 'default': 'false', 'description': "'enable accel stream'"},
+                           {'name': 'enable_gyro',                  'default': 'true', 'description': "'enable gyro stream'"},
+                           {'name': 'enable_accel',                 'default': 'true', 'description': "'enable accel stream'"},
                            {'name': 'gyro_fps',                     'default': '0', 'description': "''"},
                            {'name': 'accel_fps',                    'default': '0', 'description': "''"},
                            {'name': 'unite_imu_method',             'default': "0", 'description': '[0-None, 1-copy, 2-linear_interpolation]'},
