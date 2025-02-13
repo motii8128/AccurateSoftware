@@ -62,7 +62,7 @@ namespace motiodom
             Mat3x3 rotation_matrix = T.block<3, 3>(0, 0);
             last_posture_ = Quat(rotation_matrix);
         }
-        map_pointcloud_ = dowmSampling(map_pointcloud_, voxel_grid_leafsize_);
+        map_pointcloud_ = dowmSampling(map_pointcloud_, 0.1);
     }
 
     Vec3 NDT::getTranslation()
