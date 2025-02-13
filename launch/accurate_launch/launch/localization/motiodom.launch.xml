@@ -7,7 +7,7 @@
         <param name="ndt_max_iter" value="10"/>
         <param name="ndt_eps" value="1e-5"/>
         <param name="ndt_leaf_size" value="0.5"/>
-        <param name="ndt_step_size" value="1.0"/>
+        <param name="ndt_step_size" value="0.5"/>
         <param name="ndt_resolution" value="1.0"/>
     </node>
 </launch>
