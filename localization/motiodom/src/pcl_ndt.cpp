@@ -70,6 +70,11 @@ namespace motiodom
         return last_pose_;
     }
 
+    Quat NDT::getPosture()
+    {
+        return last_posture_;
+    }
+
     sensor_msgs::msg::PointCloud2 NDT::getMapPointCloud()
     {
         sensor_msgs::msg::PointCloud2 ros_cloud;

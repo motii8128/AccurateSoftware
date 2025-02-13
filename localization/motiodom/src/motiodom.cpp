@@ -107,6 +107,14 @@ namespace motiodom
             odom.pose.pose.position.x = pose.x();
             odom.pose.pose.position.y = pose.y();
             odom.pose.pose.position.z = pose.z();
+            if(enable_reverse_)
+            {
+                const auto lidar_posture = ndt_->getPosture();
+                odom.pose.pose.orientation.w = lidar_posture.w();
+                odom.pose.pose.orientation.x = lidar_posture.x();
+                odom.pose.pose.orientation.y = lidar_posture.y();
+                odom.pose.pose.orientation.z = lidar_posture.z();
+            }
 
             odom_publisher_->publish(odom);
             map_cloud_publisher_->publish(map_pointcloud);

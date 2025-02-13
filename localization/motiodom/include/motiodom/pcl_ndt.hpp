@@ -43,6 +43,10 @@ namespace motiodom
         /// @return Vec3の移動量
         Vec3 getTranslation();
 
+        /// @brief 姿勢を取得する
+        /// @return Quatのクォータニオン姿勢
+        Quat getPosture();
+
         /// @brief ndtによってできたマップ点群を取得する
         /// @return sensor_msgs/msg/PointCloud2のROS2メッセージ
         sensor_msgs::msg::PointCloud2 getMapPointCloud();
