@@ -1,0 +1,8 @@
+<launch>
+    <node pkg="near_point_remover" exec="near_point_remover_node">
+        <remap from="/input" to="/sensing/scan"/>
+        <remap from="/output" to="/sensing/filtered_scan"/>
+
+        <param name="range" value="0.1"/>
+    </node>
+</launch>

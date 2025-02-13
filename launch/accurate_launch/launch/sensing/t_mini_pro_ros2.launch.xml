@@ -1,6 +1,6 @@
 <launch>
     <node pkg="t_mini_pro_ros2" exec="t_mini_pro_ros2_node">
-        <remap from="/ydlidar/scan" to="/ydlidar/scan"/>
+        <remap from="/ydlidar/scan" to="/sensing/scan"/>
 
         <param name="baudrate" value="230400"/>
         <param name="enable_reverse" value="false"/>
