@@ -4,10 +4,10 @@
         <remap from="/pointcloud" to="/ydlidar/scan"/>
 
         <param name="enable_reverse" value="true"/>
-        <param name="ndt_max_iter" value="35"/>
-        <param name="ndt_eps" value="0.001"/>
-        <param name="ndt_leaf_size" value="0.2"/>
-        <param name="ndt_step_size" value="0.1"/>
+        <param name="ndt_max_iter" value="10"/>
+        <param name="ndt_eps" value="1e-5"/>
+        <param name="ndt_leaf_size" value="0.5"/>
+        <param name="ndt_step_size" value="0.5"/>
         <param name="ndt_resolution" value="1.0"/>
     </node>
 </launch>
