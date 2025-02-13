@@ -3,6 +3,6 @@
         <remap from="/input" to="/sensing/scan"/>
         <remap from="/output" to="/sensing/filtered_scan"/>
 
-        <param name="range" value="1.0"/>
+        <param name="range" value="0.3"/>
     </node>
 </launch>
