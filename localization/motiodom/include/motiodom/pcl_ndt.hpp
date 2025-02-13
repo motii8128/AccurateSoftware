@@ -26,6 +26,10 @@ namespace motiodom
         /// @param max_iter 最大実行回数。基本収束するまで行うが、収束しない場合に何回実行するかを決める。
         NDT(float voxel_grid_leaf_size, float eps, float step_size, float resolution, int max_iter);
 
+        /// @brief LidarオンリーかIMUも使うか決める
+        /// @param enable trueだとLidarオンリーモード
+        void setEnableOnlyLidar(bool enable);
+
         /// @brief マップ点群を初期化する
         /// @param ros_cloud sensor_msgs/msg/PointCloudの点群
         void initRegistraion(const sensor_msgs::msg::PointCloud::SharedPtr ros_cloud);
@@ -76,10 +80,12 @@ namespace motiodom
         float step_size_;
         float resolution_;
         int max_iter_;
+        bool enable_only_lidar_;
         pcl::PointCloud<pcl::PointXYZ>::Ptr map_pointcloud_;
         pcl::PointCloud<pcl::PointXYZ>::Ptr translated_pointcloud_;
         pcl::NormalDistributionsTransform<pcl::PointXYZ, pcl::PointXYZ>::Ptr ndt_;
         Vec3 last_pose_;
+        Quat last_posture_;
     };
 }
 

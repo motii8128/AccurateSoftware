@@ -25,8 +25,8 @@ namespace motiodom
 
 
         RCLCPP_INFO(this->get_logger(), "Get Parameters");
-        this->declare_parameter("enable_reverse", false);
-        this->get_parameter("enable_reverse", enable_reverse_);
+        this->declare_parameter("enable_only_lidar", false);
+        this->get_parameter("enable_only_lidar", enable_reverse_);
         this->declare_parameter("ndt_max_iter", 30);
         this->get_parameter("ndt_max_iter", max_iter_);
         this->declare_parameter("ndt_eps", 0.0001);
@@ -47,6 +47,7 @@ namespace motiodom
 
         RCLCPP_INFO(this->get_logger(), "Initialize NDT");
         ndt_ = std::make_shared<NDT>(voxel_grid_leafsize_, eps_, step_size_, resolution_, max_iter_);
+        ndt_->setEnableOnlyLidar(enable_reverse_);
 
 
         RCLCPP_INFO(this->get_logger(), "Start MotiOdom");

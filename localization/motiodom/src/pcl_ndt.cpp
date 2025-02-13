@@ -13,6 +13,12 @@ namespace motiodom
         ndt_->setResolution(resolution_);
         ndt_->setMaximumIterations(max_iter_);
         last_pose_ = Vec3(0.0, 0.0, 0.0);
+        last_posture_ = Quat(1.0, 0.0, 0.0, 0.0);
+    }
+
+    void NDT::setEnableOnlyLidar(bool enable)
+    {
+        enable_only_lidar_ = enable;
     }
 
     void NDT::initRegistraion(const sensor_msgs::msg::PointCloud::SharedPtr ros_cloud)
@@ -29,8 +35,12 @@ namespace motiodom
 
         new_pointcloud = dowmSampling(new_pointcloud, voxel_grid_leafsize_);
 
+        if(!enable_only_lidar_)
+        {
+            last_posture_ = posture;
+        }
         Eigen::Matrix4f init_guess = Eigen::Matrix4f::Identity();
-        const Mat3x3 rotation_mat = posture.toRotationMatrix();
+        const Mat3x3 rotation_mat = last_posture_.toRotationMatrix();
         init_guess.block<3, 3>(0, 0) = rotation_mat;
         init_guess.block<3, 1>(0, 3) = last_pose_;
 
@@ -47,7 +57,12 @@ namespace motiodom
         last_pose_(2) = T(2, 3);
 
         *map_pointcloud_ += *translated_pointcloud_;
-        map_pointcloud_ = dowmSampling(map_pointcloud_, 0.1);
+        if(enable_only_lidar_)
+        {
+            Mat3x3 rotation_matrix = T.block<3, 3>(0, 0);
+            last_posture_ = Quat(rotation_matrix);
+        }
+        map_pointcloud_ = dowmSampling(map_pointcloud_, voxel_grid_leafsize_);
     }
 
     Vec3 NDT::getTranslation()
