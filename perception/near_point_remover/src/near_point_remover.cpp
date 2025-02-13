@@ -19,25 +19,16 @@ namespace near_point_remover
 
     void NearPointRemover::topic_callback(const sensor_msgs::msg::PointCloud::SharedPtr msg)
     {
-        pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
-        cloud = ros2pcl(msg);
-
-        pcl::PointCloud<pcl::PointXYZ>::Ptr filtered(new pcl::PointCloud<pcl::PointXYZ>);
-        pcl::PassThrough<pcl::PointXYZ> pass;
-        pass.setInputCloud(cloud);
-        pass.setFilterFieldName("y");
-        pass.setFilterLimits(0.0, param_range_);
-        pass.filter(*filtered);
-
         sensor_msgs::msg::PointCloud result_msg;
-        for(const auto &pcl_p : filtered->points)
-        {
-            geometry_msgs::msg::Point32 p;
-            p.x = pcl_p.x;
-            p.y = pcl_p.y;
-            p.z = pcl_p.z;
+        result_msg.header = msg->header;
 
-            result_msg.points.push_back(p);
+        for(const auto& p : msg->points)
+        {
+            const auto dist = std::sqrt(p.x*p.x + p.y*p.y);
+            if(dist > param_range_)
+            {
+                result_msg.points.push_back(p);
+            }
         }
 
         publisher_->publish(result_msg);
