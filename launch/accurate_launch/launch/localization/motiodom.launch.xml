@@ -2,6 +2,7 @@
     <node pkg="motiodom" exec="motiodom_node">
         <remap from="/imu" to="/imu"/>
         <remap from="/pointcloud" to="/sensing/filtered_scan"/>
+        <remap from="/odom" to="/localization/motiodom"/>
 
         <param name="enable_only_lidar" value="true"/>
         <param name="ndt_max_iter" value="10"/>

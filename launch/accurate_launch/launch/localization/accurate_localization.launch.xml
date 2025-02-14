@@ -1,0 +1,15 @@
+<launch>
+    <node pkg="accurate_localization" exec="accurate_localization_node">
+        <remap from="/odom" to="/localization/motiodom"/>
+        <remap from="/arm/updown" to="/localization/arm/updown"/>
+        <remap from="/arm/frontback" to="/localization/arm/frontback"/>
+        <remap from="/path" to="/localization/path"/>
+        <remap from="/pose" to="/localization/current"/>
+
+        <param name="frame_id" value="map"/>
+        <param name="child_frame_id" value="base_link"/>
+        <param name="arm_base_id" value="arm_link"/>
+        <param name="arm_updown_id" value="updown"/>
+        <param name="arm_frontback_id" value="frontback"/>
+    </node>
+</launch>
