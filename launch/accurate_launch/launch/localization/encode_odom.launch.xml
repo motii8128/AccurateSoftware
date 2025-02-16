@@ -1,0 +1,17 @@
+<launch>
+    <node pkg="encode_odom" exec="encode_odom_node" name="updown_encode_odom">
+        <remap from="/encode" to="/sensing/encode/updown"/>
+        <remap from="/movement" to="/localization/arm/updown"/>
+        
+        <param name="gear_radius" value="0.3"/>
+        <param name="enable_reverse" value="false"/>
+    </node>
+
+    <node pkg="encode_odom" exec="encode_odom_node" name="frontback_encode_odom">
+        <remap from="/encode" to="/sensing/encode/frontback"/>
+        <remap from="/movement" to="/localization/arm/frontback"/>
+        
+        <param name="gear_radius" value="0.3"/>
+        <param name="enable_reverse" value="false"/>
+    </node>
+</launch>
