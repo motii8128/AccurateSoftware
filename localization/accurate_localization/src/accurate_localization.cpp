@@ -49,16 +49,19 @@ namespace accurate_localization
         odom_.transform.translation.y = msg->pose.pose.position.y;
         odom_.transform.translation.z = msg->pose.pose.position.z;
         odom_.transform.rotation = msg->pose.pose.orientation;
+        odom_.header.stamp = this->get_clock()->now();
     }
 
     void AccurateLocalization::arm_frontback_callback(const std_msgs::msg::Float32::SharedPtr msg)
     {
         frontback_.transform.translation.z = msg->data;
+        frontback_.header.stamp = this->get_clock()->now();
     }
 
     void AccurateLocalization::arm_updown_callback(const std_msgs::msg::Float32::SharedPtr msg)
     {
         updown_.transform.translation.x = msg->data;
+        updown_.header.stamp = this->get_clock()->now();
     }
 
     void AccurateLocalization::timer_callback()
