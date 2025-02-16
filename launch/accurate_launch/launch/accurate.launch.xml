@@ -2,4 +2,6 @@
     <include file="$(find-pkg-share accurate_launch)/launch/localization.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/sensing.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/perception.launch.xml"/>
+
+    <include file="$(find-pkg-share accurate_launch)/launch/sim/rviz.launch.xml"/>
 </launch>
