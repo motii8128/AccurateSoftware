@@ -5,10 +5,8 @@
 #include <std_msgs/msg/float32.hpp>
 #include <geometry_msgs/msg/twist.hpp>
 #include <sensor_msgs/msg/joy.hpp>
-#include <chrono>
 
 using std::placeholders::_1;
-using namespace std::chrono_literals;
 
 namespace dualsense_ros2
 {
@@ -21,6 +19,8 @@ namespace dualsense_ros2
         private:
         rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr twist_publisher_;
         rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr f_publisher_1;
+        rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr f_publisher_2;
+        rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr f_publisher_3;
 
         rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_subscriber_;
 

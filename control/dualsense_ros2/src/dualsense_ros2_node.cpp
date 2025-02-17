@@ -4,9 +4,11 @@ namespace dualsense_ros2
 {
     DualSenseROS2::DualSenseROS2(const rclcpp::NodeOptions & node_options) : rclcpp::Node("DualSenseROS2", node_options)
     {
-        twist_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("/dualsense/twist", rclcpp::SystemDefaultsQoS());
+        twist_publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("/dualsense/twist", 0);
 
-        f_publisher_1 = this->create_publisher<std_msgs::msg::Float32>("/dualsense/f", rclcpp::SystemDefaultsQoS());
+        f_publisher_1 = this->create_publisher<std_msgs::msg::Float32>("/dualsense/up_and_down", 0);
+        f_publisher_2 = this->create_publisher<std_msgs::msg::Float32>("/dualsense/l_sholder", 0);
+        f_publisher_3 = this->create_publisher<std_msgs::msg::Float32>("/dualsense/r_sholder", 0);
 
         joy_subscriber_ = this->create_subscription<sensor_msgs::msg::Joy>("/joy", rclcpp::SystemDefaultsQoS(), std::bind(&DualSenseROS2::topic_callback, this, _1));
 
@@ -18,21 +20,23 @@ namespace dualsense_ros2
 
     void DualSenseROS2::topic_callback(const sensor_msgs::msg::Joy::SharedPtr msg)
     {
-        auto x_msg = std_msgs::msg::Float32();
-        auto y_msg = std_msgs::msg::Float32();
-        auto rotation_msg = std_msgs::msg::Float32();
         auto cmd = geometry_msgs::msg::Twist();
-        cmd.linear.x = max_pow_* msg->axes[1];
-        cmd.linear.y = max_pow_ * msg->axes[0];
-        cmd.angular.z = max_pow_* msg->axes[3];
+        cmd.linear.x = -1.0 * msg->axes[0];
+        cmd.linear.y = msg->axes[1];
+        cmd.angular.z = msg->axes[3];
 
         auto f1_msg = std_msgs::msg::Float32();
+        auto f2_msg = std_msgs::msg::Float32();
+        auto f3_msg = std_msgs::msg::Float32();
 
-        // left right
-        f1_msg.data = -1.0 * msg->axes[7];
+        f1_msg.data = msg->axes[7];
+        f2_msg.data = msg->buttons[4] - msg->buttons[6];
+        f3_msg.data = msg->buttons[5] - msg->buttons[7];
 
         twist_publisher_->publish(cmd);
         f_publisher_1->publish(f1_msg);
+        f_publisher_2->publish(f2_msg);
+        f_publisher_3->publish(f3_msg);
     }
 }
 
