@@ -63,8 +63,8 @@ namespace serial_controller
             const auto w2 = wheel_cmd_->data[1];
             const auto w3 = wheel_cmd_->data[2];
 
-            std::string tx = std::to_string(m1) + ',' + std::to_string(m2) + ',' + std::to_string(m3) + ','
-                + std::to_string(w1) + ',' + std::to_string(w2) + ',' + std::to_string(w3) + 'e';
+            std::string tx = std::to_string(m1+500) + ',' + std::to_string(m2+500) + ',' + std::to_string(m3+500) + ','
+                + std::to_string(w1+300) + ',' + std::to_string(w2+300) + ',' + std::to_string(w3+300);
 
             const auto serial_write_result = serial_->WritePort(tx);
             if(serial_write_result)
