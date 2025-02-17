@@ -9,6 +9,6 @@
         <remap from="/dualsense/l_sholder" to="/planning/arm/frontback"/>
         <remap from="/dualsense/r_sholder" to="/planning/arm/hand"/>
 
-        <param name="max_pow" value="1.0" />
+        <param name="max_pow" value="300.0" />
     </node>
 </launch>
