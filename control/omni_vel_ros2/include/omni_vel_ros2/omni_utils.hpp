@@ -45,9 +45,9 @@ namespace omni_vel_ros2
             }
             else
             {
-                rpm_array[0] = wheel_0_v * 255;
-                rpm_array[1] = wheel_1_v * 255;
-                rpm_array[2] = wheel_2_v * 255;
+                rpm_array[0] = wheel_0_v * 100;
+                rpm_array[1] = wheel_1_v * 100;
+                rpm_array[2] = wheel_2_v * 100;
 
                 return rpm_array;
             }

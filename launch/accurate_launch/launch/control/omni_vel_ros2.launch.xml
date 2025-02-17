@@ -8,6 +8,6 @@
         <param name="wheel_rad_1" value="330.0"/>
         <param name="wheel_rad_2" value="90.0"/>
         <param name="wheel_rad_3" value="210.0"/>
-        <param name="pwm_mode" value="false"/>
+        <param name="pwm_mode" value="true"/>
     </node>
 </launch>
