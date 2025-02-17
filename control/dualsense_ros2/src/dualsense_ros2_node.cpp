@@ -29,9 +29,9 @@ namespace dualsense_ros2
         auto f2_msg = std_msgs::msg::Float32();
         auto f3_msg = std_msgs::msg::Float32();
 
-        f1_msg.data = msg->axes[7];
-        f2_msg.data = msg->buttons[4] - msg->buttons[6];
-        f3_msg.data = msg->buttons[5] - msg->buttons[7];
+        f1_msg.data = msg->axes[7] * 300.0;
+        f2_msg.data = (msg->buttons[4] - msg->buttons[6]) * 300.0;
+        f3_msg.data = (msg->buttons[5] - msg->buttons[7]) * 300.0;
 
         twist_publisher_->publish(cmd);
         f_publisher_1->publish(f1_msg);
