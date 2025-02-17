@@ -26,9 +26,9 @@ namespace arm_cmd_creator
         rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr sub3_;
         rclcpp::Publisher<std_msgs::msg::Int64MultiArray>::SharedPtr pub_;
         rclcpp::TimerBase::SharedPtr timer_;
-        std_msgs::msg::Float32::SharedPtr frontback_;
-        std_msgs::msg::Float32::SharedPtr updown_;
-        std_msgs::msg::Float32::SharedPtr hand_;
+        std_msgs::msg::Float32 frontback_;
+        std_msgs::msg::Float32 updown_;
+        std_msgs::msg::Float32 hand_;
     };
 }
 

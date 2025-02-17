@@ -24,39 +24,37 @@ namespace arm_cmd_creator
 
         timer_ = this->create_wall_timer(std::chrono::milliseconds(1), std::bind(&ArmCmdCreator::timer_callback, this));
 
-        frontback_ = nullptr;
-        updown_ = nullptr;
-        hand_ = nullptr;
+        frontback_ = std_msgs::msg::Float32();
+        updown_ = std_msgs::msg::Float32();
+        hand_ = std_msgs::msg::Float32();
 
         RCLCPP_INFO(this->get_logger(), "Start ArmCmdCreator.");
     }
 
     void ArmCmdCreator::arm1_callback(const std_msgs::msg::Float32::SharedPtr msg)
     {
-        frontback_ = msg;
+        frontback_.data = msg->data;
     }
 
     void ArmCmdCreator::arm2_callback(const std_msgs::msg::Float32::SharedPtr msg)
     {
-        updown_ = msg;
+        updown_.data = msg->data;
     }
 
     void ArmCmdCreator::arm3_callback(const std_msgs::msg::Float32::SharedPtr msg)
     {
-        hand_ = msg;
+        hand_.data = msg->data;
     }
 
     void ArmCmdCreator::timer_callback()
     {
-        if(frontback_ != nullptr && updown_ != nullptr && hand_ != nullptr)
-        {
-            auto send_msg = std_msgs::msg::Int64MultiArray();
-            send_msg.data.push_back(static_cast<int64_t>(frontback_->data));
-            send_msg.data.push_back(static_cast<int64_t>(updown_->data));
-            send_msg.data.push_back(static_cast<int64_t>(hand_->data));
+        auto send_msg = std_msgs::msg::Int64MultiArray();
+        send_msg.data.push_back(frontback_.data);
+        send_msg.data.push_back(updown_.data);
+        send_msg.data.push_back(hand_.data);
+        
 
-            pub_->publish(send_msg);
-        }
+        pub_->publish(send_msg);
     }
 }
 

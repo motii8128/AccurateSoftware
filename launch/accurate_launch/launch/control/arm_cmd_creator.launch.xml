@@ -1,0 +1,8 @@
+<launch>
+    <node pkg="arm_cmd_creator" exec="arm_cmd_creator_node">
+        <remap from="/arm_cmd" to="/control/machine"/>
+        <remap from="/arm/frontback" to="/arm/frontback"/>
+        <remap from="/arm/updown" to="/arm/updown"/>
+        <remap from="/arm/hand" to="/arm/hand"/>
+    </node>
+</launch>
