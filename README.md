@@ -1,7 +1,8 @@
 # AccurateSoftware
-
-[accurate.webm](https://github.com/user-attachments/assets/ad020cdf-b36b-445b-a6b0-4766c73eba08)
-
+```
+ros2 launch accurate_launch sim.launch.xml
+```
+[sim.webm](https://github.com/user-attachments/assets/23379f41-1d3d-484a-9930-9b009a9dd2ea)
 
 # Architecture
 ```mermaid
