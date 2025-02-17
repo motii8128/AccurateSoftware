@@ -13,7 +13,7 @@ namespace serial_controller
         fd_ =open(port_path.c_str(), O_RDWR | O_NOCTTY);
         struct termios conf_tio;
         tcgetattr(fd_,&conf_tio);
-        speed_t BAUDRATE = B115200;
+        speed_t BAUDRATE = B230400;
         cfsetispeed(&conf_tio, BAUDRATE);
         cfsetospeed(&conf_tio, BAUDRATE);
         conf_tio.c_lflag &= ~(ECHO | ICANON);
@@ -68,7 +68,7 @@ namespace serial_controller
 
         if(bytes_read < 0)
         {
-            return std::string("Read ERROR");
+            return std::to_string(bytes_read);
         }
         else
         {
