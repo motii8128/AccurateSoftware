@@ -3,8 +3,8 @@
         <remap from="/wheel" to="/control/wheel"/>
         <remap from="/machine" to="/control/machine"/>
 
-        <remap from="/encoder/updown" to="/sensing/encoder/updown"/>
-        <remap from="/encoder/frontback" to="/sensing/encoder/frontback"/>
+        <remap from="/encoder/updown" to="/sensing/encode/updown"/>
+        <remap from="/encoder/frontback" to="/sensing/encode/frontback"/>
         <remap from="/hand_ampare" to="/sensing/hand_ampare"/>
         
         <param name="port_path" value="/dev/ttyACM0"/>
