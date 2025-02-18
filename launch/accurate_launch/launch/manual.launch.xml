@@ -3,4 +3,6 @@
     <include file="$(find-pkg-share accurate_launch)/launch/control/dualsense_ros2.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/control/accurate_serial_connector.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/control/arm_cmd_creator.launch.xml"/>
+
+    <include file="$(find-pkg-share accurate_launch)/launch/localization.launch.xml"/>
 </launch>
