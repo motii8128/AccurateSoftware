@@ -7,6 +7,7 @@
 #include <pcl/point_cloud.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/registration/ndt.h>
+#include <pcl/registration/ndt_2d.h>
 #include <pcl/filters/voxel_grid.h>
 
 #include <sensor_msgs/msg/point_cloud.hpp>
@@ -54,7 +55,7 @@ namespace motiodom
         private:
         /// @brief ボクセルグリッドフィルターを使ってダウンサンプリングする
         /// @param pointcloud 入力点群
-        pcl::PointCloud<pcl::PointXYZ>::Ptr dowmSampling(const pcl::PointCloud<pcl::PointXYZ>::Ptr &pointcloud, float voxel_grid_leafsize)
+        void dowmSampling(pcl::PointCloud<pcl::PointXYZ>::Ptr pointcloud, float voxel_grid_leafsize)
         {
             pcl::PointCloud<pcl::PointXYZ>::Ptr tmp(new pcl::PointCloud<pcl::PointXYZ>);
 
@@ -63,10 +64,10 @@ namespace motiodom
             vg_filter.setLeafSize(voxel_grid_leafsize, voxel_grid_leafsize,voxel_grid_leafsize);
             vg_filter.filter(*tmp);
 
-            return tmp;
+            *pointcloud = *tmp;
         }
 
-        pcl::PointCloud<pcl::PointXYZ>::Ptr ros2pcl(const sensor_msgs::msg::PointCloud::SharedPtr ros_cloud)
+        void ros2pcl(pcl::PointCloud<pcl::PointXYZ>::Ptr output, const sensor_msgs::msg::PointCloud::SharedPtr ros_cloud)
         {
             pcl::PointCloud<pcl::PointXYZ>::Ptr new_pcl(new pcl::PointCloud<pcl::PointXYZ>);
             for(const auto & ros_p : ros_cloud->points)
@@ -74,7 +75,7 @@ namespace motiodom
                 new_pcl->points.push_back(pcl::PointXYZ(ros_p.x, ros_p.y, ros_p.z));
             }
 
-            return new_pcl;
+            *output = *new_pcl;
         }
 
         

@@ -23,17 +23,17 @@ namespace motiodom
 
     void NDT::initRegistraion(const sensor_msgs::msg::PointCloud::SharedPtr ros_cloud)
     {
-        map_pointcloud_ = ros2pcl(ros_cloud);
+        ros2pcl(map_pointcloud_, ros_cloud);
     }
 
     void NDT::compute(const sensor_msgs::msg::PointCloud::SharedPtr ros_cloud, const Quat &posture)
     {
         pcl::PointCloud<pcl::PointXYZ>::Ptr new_pointcloud(new pcl::PointCloud<pcl::PointXYZ>);
-        new_pointcloud = ros2pcl(ros_cloud);
+        ros2pcl(new_pointcloud, ros_cloud);
 
         if(map_pointcloud_->empty() || new_pointcloud->empty()) return;
 
-        new_pointcloud = dowmSampling(new_pointcloud, voxel_grid_leafsize_);
+        dowmSampling(new_pointcloud, voxel_grid_leafsize_);
 
         if(!enable_only_lidar_)
         {
@@ -62,7 +62,7 @@ namespace motiodom
             Mat3x3 rotation_matrix = T.block<3, 3>(0, 0);
             last_posture_ = Quat(rotation_matrix);
         }
-        map_pointcloud_ = dowmSampling(map_pointcloud_, 0.1);
+        dowmSampling(map_pointcloud_, 0.1);
     }
 
     Vec3 NDT::getTranslation()
