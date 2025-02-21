@@ -1,0 +1,23 @@
+<launch>
+    <node pkg="pid_arm_planner" exec="pid_arm_planner_node" name="updown_pid_planner">
+        <remap from="/target" to="/planning/target/updown"/>
+        <remap from="/current" to="/localization/arm/updown"/>
+        <remap from="/rpm" to="/planning/rpm/updown"/>
+
+        <param name="limit" value="0.5"/>
+        <param name="p_gain" value="1.0"/>
+        <param name="i_gain" value="0.03"/>
+        <param name="d_gain" value="0.1"/>
+    </node>
+
+    <node pkg="pid_arm_planner" exec="pid_arm_planner_node" name="frontback_pid_planner">
+        <remap from="/target" to="/planning/target/frontback"/>
+        <remap from="/current" to="/localization/arm/frontback"/>
+        <remap from="/rpm" to="/planning/rpm/frontback"/>
+
+        <param name="limit" value="0.5"/>
+        <param name="p_gain" value="1.0"/>
+        <param name="i_gain" value="0.03"/>
+        <param name="d_gain" value="0.1"/>
+    </node>
+</launch>
