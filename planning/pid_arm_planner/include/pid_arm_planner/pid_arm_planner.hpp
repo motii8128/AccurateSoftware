@@ -2,19 +2,33 @@
 #define PID_ARM_PLANNER
 
 #include <rclcpp/rclcpp.hpp>
-#include <geometry_msgs/msg/pose_stamped.hpp>
-#include <std_msgs/msg/int64_multi_array.hpp>
+#include <std_msgs/msg/float32.hpp>
+
+#include "pid_utils.hpp"
+
+using std::placeholders::_1;
 
 namespace pid_arm_planner
 {
-    class PIDArmPlanner : public rclcpp::Node
+    class PidArmPlanner : public rclcpp::Node
     {
         public:
-        explicit PIDArmPlanner(const rclcpp::NodeOptions&option = rclcpp::NodeOptions());
+        explicit PidArmPlanner(const rclcpp::NodeOptions&option = rclcpp::NodeOptions());
 
-        void current_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
-        void target_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
+        void target_callback(const std_msgs::msg::Float32::SharedPtr msg);
+        void current_callback(const std_msgs::msg::Float32::SharedPtr msg);
         
+        private:
+        rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr target_subscriber_;
+        rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr current_subscriber_;
+        rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr publisher_;
+        rclcpp::Time last_;
+
+        std::shared_ptr<PIDController> pid_;
+        PIDGain gain_;
+        float max_limit_;
+
+        float current_;
     };
 }
 
