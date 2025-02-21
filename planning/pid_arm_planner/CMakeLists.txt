@@ -12,7 +12,7 @@ target_include_directories(target_pid_arm_planner
 )
 
 rclcpp_components_register_node(target_pid_arm_planner
-  PLUGIN "pid_arm_planner::PIDArmPlanner"
+  PLUGIN "pid_arm_planner::PidArmPlanner"
   EXECUTABLE pid_arm_planner_node
 )
 
