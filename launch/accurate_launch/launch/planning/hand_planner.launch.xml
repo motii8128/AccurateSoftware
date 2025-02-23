@@ -1,0 +1,10 @@
+<launch>
+    <node pkg="pid_arm_planner" exec="pid_arm_planner_node" name="updown_pid_planner">
+        <remap from="/motor" to="/planning/target/hand"/>
+        <remap from="/ampare" to="/sensing/hand_ampare"/>
+        <remap from="/rpm" to="/planning/rpm/hand"/>
+
+        <param name="ampare_limit" value="10.0"/>
+        <param name="hand_power" value="100.0"/>
+    </node>
+</launch>
