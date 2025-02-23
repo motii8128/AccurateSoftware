@@ -17,9 +17,11 @@ namespace udp_connector_ros2
         void send();
 
         sockaddr_in getDestAddr();
+        std::string getRecvData();
 
         private:
-
+        sockaddr_in server_addr_, client_addr_;
+        std::string recv_data_;
     };
 }
 
