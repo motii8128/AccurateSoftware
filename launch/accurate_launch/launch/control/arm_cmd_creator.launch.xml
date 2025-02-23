@@ -3,6 +3,6 @@
         <remap from="/arm_cmd" to="/control/machine"/>
         <remap from="/arm/frontback" to="/planning/rpm/frontback"/>
         <remap from="/arm/updown" to="/planning/rpm/updown"/>
-        <remap from="/arm/hand" to="/planning/arm/hand"/>
+        <remap from="/arm/hand" to="/planning/rpm/hand"/>
     </node>
 </launch>
