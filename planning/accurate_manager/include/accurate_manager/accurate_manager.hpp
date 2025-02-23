@@ -3,6 +3,7 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <accurate_msgs/msg/status.hpp>
+#include <geometry_msgs/msg/pose_stamped.hpp>
 
 namespace accurate_msgs
 {
@@ -13,6 +14,8 @@ namespace accurate_msgs
 
         private:
         rclcpp::Subscription<accurate_msgs::msg::Status>::SharedPtr status_subscriber_;
+
+        
     };
 }
 
