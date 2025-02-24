@@ -16,4 +16,6 @@ import numpy as np
 class ZsObjDetector(Node):
     def __init__(self):
         super().__init__('zs_obj_detector')
+
         self.bridge = CvBridge()
+        self.model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
