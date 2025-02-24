@@ -10,6 +10,7 @@ namespace hand_planner
         get_motor_ = 0.0;
 
         rpm_publisher_ = this->create_publisher<std_msgs::msg::Float32>("/rpm", 0);
+        status_publisher_ = this->create_publisher<accurate_msgs::msg::Status>("/hand_status", 0);
 
         timer_ = this->create_wall_timer(std::chrono::milliseconds(1), std::bind(&HandPlanner::timer_callback, this));
 
@@ -40,6 +41,7 @@ namespace hand_planner
     void HandPlanner::timer_callback()
     {
         auto send_msg = std_msgs::msg::Float32();
+        auto status_msg = accurate_msgs::msg::Status();
 
         if(get_motor_ > 0.0)
         {
@@ -49,6 +51,7 @@ namespace hand_planner
             }
             else
             {
+                status_msg.data = accurate_msgs::msg::Status::GO_START;
                 send_msg.data = hand_power_;
             }
         }
