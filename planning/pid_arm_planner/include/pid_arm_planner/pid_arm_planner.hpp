@@ -3,6 +3,7 @@
 
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/float32.hpp>
+#include <accurate_msgs/msg/cycle.hpp>
 
 #include "pid_utils.hpp"
 
@@ -22,11 +23,12 @@ namespace pid_arm_planner
         rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr target_subscriber_;
         rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr current_subscriber_;
         rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr publisher_;
+        rclcpp::Publisher<accurate_msgs::msg::Cycle>::SharedPtr cycle_publisher_;
         rclcpp::Time last_;
 
         std::shared_ptr<PIDController> pid_;
         PIDGain gain_;
-        float max_limit_;
+        float max_limit_, goal_threshold_;
 
         float current_;
     };

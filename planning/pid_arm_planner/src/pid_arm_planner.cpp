@@ -8,6 +8,7 @@ namespace pid_arm_planner
         gain_.p_gain = this->declare_parameter("p_gain", 1.0);
         gain_.i_gain = this->declare_parameter("i_gain", 0.03);
         gain_.d_gain = this->declare_parameter("d_gain", 0.1);
+        goal_threshold_ = this->declare_parameter("goal_threshold", 0.05);
         current_ = 0.0;
 
         pid_ = std::make_shared<PIDController>();
@@ -26,6 +27,7 @@ namespace pid_arm_planner
         );
 
         publisher_ = this->create_publisher<std_msgs::msg::Float32>("/rpm", 0);
+        cycle_publisher_ = this->create_publisher<accurate_msgs::msg::Cycle>("/cycle", 0);
     }
 
     void PidArmPlanner::target_callback(const std_msgs::msg::Float32::SharedPtr msg)
@@ -45,9 +47,20 @@ namespace pid_arm_planner
                 const auto pid_result = pid_->calc(msg->data, current_, dt);
 
                 auto rpm_msg = std_msgs::msg::Float32();
+                auto cycle_msg = accurate_msgs::msg::Cycle();
                 rpm_msg.data = 500.0 * pid_result;
+                if(abs(msg->data - current_) < goal_threshold_)
+                {
+                    rpm_msg.data = 0.0;
+                    cycle_msg.data = accurate_msgs::msg::Cycle::GOAL;
+                }
+                else
+                {
+                    cycle_msg.data = accurate_msgs::msg::Cycle::PROGRESS;
+                }
 
                 publisher_->publish(rpm_msg);
+                cycle_publisher_->publish(cycle_msg);
             }
         }
         last_ = current_time;
