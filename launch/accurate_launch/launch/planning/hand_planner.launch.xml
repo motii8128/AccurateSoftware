@@ -3,6 +3,7 @@
         <remap from="/motor" to="/planning/target/hand"/>
         <remap from="/ampare" to="/sensing/hand_ampare"/>
         <remap from="/rpm" to="/planning/rpm/hand"/>
+        <remap from="/hand_status" to="/planning/goal_check/hand"/>
 
         <param name="ampare_limit" value="10.0"/>
         <param name="hand_power" value="100.0"/>
