@@ -1,0 +1,10 @@
+<launch>
+    <node pkg="position_goal_checker" exec="position_goal_checker_node">
+        <remap from="/current" to="/localization/current"/>
+        <remap from="/target" to="/goal_pose"/>
+        <remap from="/cycle" to="/planning/goal_check/position"/>
+
+        <param name="pos_threshold" value="0.1"/>
+        <param name="theta_threshold" value="0.1"/>
+    </node>
+</launch>

@@ -3,4 +3,5 @@
     <include file="$(find-pkg-share accurate_launch)/launch/planning/pid_local_planner.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/planning/pid_arm_planner.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/planning/hand_planner.launch.xml"/>
+    <include file="$(find-pkg-share accurate_launch)/launch/planning/position_goal_checker.launch.xml"/>
 </launch>
