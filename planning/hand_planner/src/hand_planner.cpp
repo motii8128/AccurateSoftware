@@ -10,7 +10,7 @@ namespace hand_planner
         get_motor_ = 0.0;
 
         rpm_publisher_ = this->create_publisher<std_msgs::msg::Float32>("/rpm", 0);
-        status_publisher_ = this->create_publisher<accurate_msgs::msg::Status>("/hand_status", 0);
+        status_publisher_ = this->create_publisher<accurate_msgs::msg::HandStatus>("/hand_status", 0);
 
         timer_ = this->create_wall_timer(std::chrono::milliseconds(1), std::bind(&HandPlanner::timer_callback, this));
 
@@ -41,17 +41,18 @@ namespace hand_planner
     void HandPlanner::timer_callback()
     {
         auto send_msg = std_msgs::msg::Float32();
-        auto status_msg = accurate_msgs::msg::Status();
+        auto status_msg = accurate_msgs::msg::HandStatus();
 
         if(get_motor_ > 0.0)
         {
             if(abs(get_ampare_) > ampare_limit_)
             {
+                status_msg.data = accurate_msgs::msg::HandStatus::CATCH;
                 send_msg.data = 0.0;
             }
             else
             {
-                status_msg.data = accurate_msgs::msg::Status::GO_START;
+                status_msg.data = accurate_msgs::msg::HandStatus::PROGRESS;
                 send_msg.data = hand_power_;
             }
         }
@@ -59,19 +60,23 @@ namespace hand_planner
         {
             if(abs(get_ampare_) > ampare_limit_)
             {
+                status_msg.data = accurate_msgs::msg::HandStatus::EMIT;
                 send_msg.data = 0.0;
             }
             else
             {
+                status_msg.data = accurate_msgs::msg::HandStatus::PROGRESS;
                 send_msg.data = -1.0 * hand_power_;
             }
         }
         else
         {
+            status_msg.data = accurate_msgs::msg::HandStatus::PROGRESS;
             send_msg.data = 0.0;
         }
 
         rpm_publisher_->publish(send_msg);
+        status_publisher_->publish(status_msg);
     }
 }
 
