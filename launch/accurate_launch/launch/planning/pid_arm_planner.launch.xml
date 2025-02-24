@@ -3,21 +3,25 @@
         <remap from="/target" to="/planning/target/updown"/>
         <remap from="/current" to="/localization/arm/updown"/>
         <remap from="/rpm" to="/planning/rpm/updown"/>
+        <remap from="/cycle" to="/planning/goal_check/updown"/>
 
         <param name="limit" value="0.5"/>
         <param name="p_gain" value="1.0"/>
         <param name="i_gain" value="0.03"/>
         <param name="d_gain" value="0.1"/>
+        <param name="goal_threshold" value="0.05"/>
     </node>
 
     <node pkg="pid_arm_planner" exec="pid_arm_planner_node" name="frontback_pid_planner">
         <remap from="/target" to="/planning/target/frontback"/>
         <remap from="/current" to="/localization/arm/frontback"/>
         <remap from="/rpm" to="/planning/rpm/frontback"/>
+        <remap from="/cycle" to="/planning/goal_check/frontback"/>
 
         <param name="limit" value="0.5"/>
         <param name="p_gain" value="1.0"/>
         <param name="i_gain" value="0.03"/>
         <param name="d_gain" value="0.1"/>
+        <param name="goal_threshold" value="0.05"/>
     </node>
 </launch>
