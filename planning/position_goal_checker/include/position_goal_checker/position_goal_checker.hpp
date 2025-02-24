@@ -1,0 +1,4 @@
+#ifndef POSITION_GOAL_CHECKER_
+#define POSITION_GOAL_CHECKER_
+
+#endif
