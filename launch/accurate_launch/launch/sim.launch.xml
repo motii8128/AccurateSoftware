@@ -5,6 +5,7 @@
     <include file="$(find-pkg-share accurate_launch)/launch/localization/localization_sim.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/planning/linear_path_planner.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/planning/pid_local_planner.launch.xml"/>
+    <include file="$(find-pkg-share accurate_launch)/launch/planning/position_goal_checker.launch.xml"/>
 
     <include file="$(find-pkg-share accurate_launch)/launch/sim/rviz.launch.xml"/>
 </launch>
