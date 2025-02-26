@@ -1,26 +1,23 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.5)
 project(rs_d455_ros2)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
+find_package(ament_cmake_auto REQUIRED)
+ament_auto_find_build_dependencies()
 
-# find dependencies
-find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+ament_auto_add_library(target_rs_d455_ros2 SHARED
+  DIRECTORY src
+)
+include_directories(${OpenCV_INCLUDE_DIRS})
+target_include_directories(target_rs_d455_ros2
+  SYSTEM PUBLIC
+)
 
-if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # comment the line when a copyright and license is added to all source files
-  set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # comment the line when this package is in a git repo and when
-  # a copyright and license is added to all source files
-  set(ament_cmake_cpplint_FOUND TRUE)
-  ament_lint_auto_find_test_dependencies()
-endif()
+rclcpp_components_register_node(target_rs_d455_ros2
+  PLUGIN "rs_d455_ros2::RealSenseD455_ROS2"
+  EXECUTABLE rs_d455_ros2_node
+)
+target_link_libraries(target_webcam_face_detector ${OpenCV_LIBRARIES})
 
-ament_package()
+ament_auto_package(
+  INSTALL_TO_SHARE
+)

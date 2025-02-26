@@ -5,9 +5,9 @@
         <remap from="/joy" to="/joy"/>
 
         <remap from="/dualsense/twist" to="/planning/cmd_vel"/>
-        <remap from="/dualsense/up_and_down" to="/planning/arm/updown"/>
-        <remap from="/dualsense/l_sholder" to="/planning/arm/frontback"/>
-        <remap from="/dualsense/r_sholder" to="/planning/arm/hand"/>
+        <remap from="/dualsense/up_and_down" to="/planning/rpm/updown"/>
+        <remap from="/dualsense/l_sholder" to="/planning/rpm/frontback"/>
+        <remap from="/dualsense/r_sholder" to="/planning/rpm/hand"/>
 
         <param name="max_pow" value="500.0" />
     </node>

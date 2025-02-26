@@ -7,6 +7,7 @@
                 "/opt/ros/jazzy/include/**",
                 "/usr/include/eigen3",
                 "/usr/include/pcl-1.14/**",
+                "/usr/include/opencv4/**",
                 "../../install/accurate_msgs/include/accurate_msgs/**"
             ],
             "defines": [],
