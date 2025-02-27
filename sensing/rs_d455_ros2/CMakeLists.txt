@@ -22,6 +22,7 @@ rclcpp_components_register_node(target_rs_d455_ros2
 target_link_libraries(target_rs_d455_ros2 
   ${OpenCV_LIBRARIES}
   ${cv_bridge_LIBRARIES}
+  ${realsense2_LIBRARY}
 )
 
 ament_auto_package(
