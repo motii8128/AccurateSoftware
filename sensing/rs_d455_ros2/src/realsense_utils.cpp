@@ -7,11 +7,22 @@ namespace rs_d455_ros2
         devices_ = ctx_.query_devices();
         if(devices_.size())
         {
-            rs2::config cfg;
-            cfg.enable_stream(RS2_STREAM_COLOR, width_, height_, RS2_FORMAT_BGR8, fps_);
-            cfg.enable_stream(RS2_STREAM_ACCEL, RS2_FORMAT_MOTION_XYZ32F);
-            cfg.enable_stream(RS2_STREAM_GYRO, RS2_FORMAT_MOTION_XYZ32F);
-            pipe_.start(cfg);
+            try
+            {
+                rs2::config cfg;
+                cfg.enable_stream(RS2_STREAM_COLOR, width_, height_, RS2_FORMAT_BGR8, fps_);
+                cfg.enable_stream(RS2_STREAM_ACCEL, RS2_FORMAT_MOTION_XYZ32F);
+                cfg.enable_stream(RS2_STREAM_GYRO, RS2_FORMAT_MOTION_XYZ32F);
+                pipe_.start(cfg);
+            }
+            catch (const rs2::error& e) {
+                std::cerr << "RealSense error calling " << e.get_failed_function() << "(" << e.get_failed_args() << "):\n    " << e.what() << std::endl;
+                return EXIT_FAILURE;
+            }
+            catch (const std::exception& e) {
+                std::cerr << e.what() << std::endl;
+                return EXIT_FAILURE;
+            }
         }
         else
         {
