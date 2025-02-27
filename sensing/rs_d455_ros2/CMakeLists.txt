@@ -16,7 +16,7 @@ rclcpp_components_register_node(target_rs_d455_ros2
   PLUGIN "rs_d455_ros2::RealSenseD455_ROS2"
   EXECUTABLE rs_d455_ros2_node
 )
-target_link_libraries(target_webcam_face_detector ${OpenCV_LIBRARIES})
+target_link_libraries(target_rs_d455_ros2 ${OpenCV_LIBRARIES})
 
 ament_auto_package(
   INSTALL_TO_SHARE
