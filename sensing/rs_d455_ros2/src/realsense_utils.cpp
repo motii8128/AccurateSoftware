@@ -15,7 +15,6 @@ namespace rs_d455_ros2
                 cfg.enable_stream(RS2_STREAM_DEPTH, width_, height_, RS2_FORMAT_Z16, fps_);
                 cfg.enable_stream(RS2_STREAM_ACCEL, RS2_FORMAT_MOTION_XYZ32F, 250);
                 cfg.enable_stream(RS2_STREAM_GYRO, RS2_FORMAT_MOTION_XYZ32F, 400);
-                cfg.enable_device(devices_[0].get_info(RS2_CAMERA_INFO_SERIAL_NUMBER));
                 pipe_.start(cfg);
             }
             catch (const rs2::error& e) {

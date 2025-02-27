@@ -27,9 +27,9 @@ namespace rs_d455_ros2
         rs2::context ctx_;
         rs2::pipeline pipe_;
         rs2::device_list devices_;
-        const uint8_t width_ = 640;
-        const uint8_t height_ = 480;
-        const uint8_t fps_ = 30;
+        const int width_ = 640;
+        const int height_ = 480;
+        const int fps_ = 30;
     };
 
 }
