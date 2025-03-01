@@ -28,7 +28,7 @@ namespace rs_d455_ros2
         realsense_->getColorFrame(image);
         auto imu = realsense_->getIMU();
         RCLCPP_INFO(this->get_logger(), "Accel: %lf, %lf, %lf", imu.acc_x, imu.acc_y, imu.acc_z);
-        RCLCPP_INFO(this->get_logger(), "Ang: %lf, %lf, %lf", imu.ang_x, imu.ang_y imu.ang_z);
+        RCLCPP_INFO(this->get_logger(), "Ang: %lf, %lf, %lf", imu.ang_x, imu.ang_y, imu.ang_z);
 
         cv_bridge::CvImage img_bridge;
         auto header = std_msgs::msg::Header();
