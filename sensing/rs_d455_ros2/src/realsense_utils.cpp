@@ -14,11 +14,13 @@ namespace rs_d455_ros2
                 dev.hardware_reset();                
                 rs2::config cfg;
                 cfg.disable_all_streams();
-                cfg.enable_stream(RS2_STREAM_COLOR);
-                // cfg.enable_stream(RS2_STREAM_INFRARED, 640, 480, RS2_FORMAT_BGR8, 30);
-                cfg.enable_stream(RS2_STREAM_DEPTH);
-                cfg.enable_stream(RS2_STREAM_ACCEL);
-                cfg.enable_stream(RS2_STREAM_GYRO);
+                // cfg.enable_stream(RS2_STREAM_COLOR);
+                // cfg.enable_stream(RS2_STREAM)
+                // // cfg.enable_stream(RS2_STREAM_INFRARED, 640, 480, RS2_FORMAT_BGR8, 30);
+                // cfg.enable_stream(RS2_STREAM_DEPTH);
+                // cfg.enable_stream(RS2_STREAM_ACCEL);
+                // cfg.enable_stream(RS2_STREAM_GYRO);
+                cfg.enable_all_streams();
                 cfg.enable_device(std::string(dev.get_info(RS2_CAMERA_INFO_SERIAL_NUMBER)));
                 pipe_.start(cfg);
             }
