@@ -10,7 +10,7 @@ namespace rs_d455_ros2
 
         // sleep(3);
 
-        timer_ = this->create_wall_timer(std::chrono::milliseconds(1), std::bind(&RealSenseD455_ROS2::timer_callback, this));
+        timer_ = this->create_wall_timer(std::chrono::milliseconds(17), std::bind(&RealSenseD455_ROS2::timer_callback, this));
 
         const auto device_info = realsense_->getDeviceInfo();
 
@@ -24,10 +24,8 @@ namespace rs_d455_ros2
 
     void RealSenseD455_ROS2::timer_callback()
     {
-        RCLCPP_INFO(this->get_logger(), "Get Color frame...");
         cv::Mat image;
         realsense_->getColorFrame(image);
-        RCLCPP_INFO(this->get_logger(), "Success!!");
 
         cv_bridge::CvImage img_bridge;
         auto header = std_msgs::msg::Header();
