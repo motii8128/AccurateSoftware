@@ -18,7 +18,6 @@ namespace rs_d455_ros2
                 pipe_.start(cfg);
             }
             catch (const rs2::error& e) {
-                pipe_.stop();
                 std::cerr << "RealSense error calling " << e.get_failed_function() << "(" << e.get_failed_args() << "):\n    " << e.what() << std::endl;
             }
             catch (const std::exception& e) {
