@@ -1,6 +1,7 @@
 {
     "cmake.sourceDirectory": "/home/motii/ros2_ws/src/AccurateSoftware/localization/stl_visualizer",
     "files.associations": {
-        "functional": "cpp"
+        "functional": "cpp",
+        "string": "cpp"
     }
 }
