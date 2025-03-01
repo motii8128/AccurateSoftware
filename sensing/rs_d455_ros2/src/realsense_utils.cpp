@@ -40,7 +40,7 @@ namespace rs_d455_ros2
                 // cfg.enable_stream(RS2_STREAM_GYRO, RS2_FORMAT_MOTION_XYZ32F, 200);
                 cfg.enable_device(std::string(devices_[0].get_info(RS2_CAMERA_INFO_SERIAL_NUMBER)));
 
-                pipe_.start(cfg);
+                pipe_.start();
             }
             catch (const rs2::error& e) {
                 std::cerr << "RealSense error calling " << e.get_failed_function() << "(" << e.get_failed_args() << "):\n    " << e.what() << std::endl;
