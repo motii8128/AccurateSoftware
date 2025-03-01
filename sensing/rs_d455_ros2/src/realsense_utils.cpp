@@ -72,7 +72,22 @@ namespace rs_d455_ros2
                 cv::Mat image(cv::Size(width_, height_), CV_8UC3, (void*)color_frame.get_data(), cv::Mat::AUTO_STEP);
                 image.copyTo(color_image);
             }
-            
+            else if(frame.get_profile().stream_type() == RS2_STREAM_GYRO)
+            {
+                auto motion = frame.as<rs2::motion_frame>();
+                rs2_vector gyro = motion.get_motion_data();
+                imu_data_.ang_x = gyro.x;
+                imu_data_.ang_y = gyro.y;
+                imu_data_.ang_z = gyro.z;
+            }
+            else if(frame.get_profile().stream_type() == RS2_STREAM_ACCEL)
+            {
+                auto motion = frame.as<rs2::motion_frame>();
+                rs2_vector acc = motion.get_motion_data();
+                imu_data_.acc_x = acc.x;
+                imu_data_.acc_y = acc.y;
+                imu_data_.acc_z = acc.z;
+            }
         }   
     }
 
