@@ -9,6 +9,8 @@ namespace rs_d455_ros2
         {
             try
             {
+                auto dev = devices_[0];
+                dev.hardware_reset();
                 rs2::config cfg;
                 cfg.disable_all_streams();
                 cfg.enable_stream(RS2_STREAM_COLOR, width_, height_, RS2_FORMAT_RGB8, fps_);
