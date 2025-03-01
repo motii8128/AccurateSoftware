@@ -14,6 +14,12 @@ namespace rs_d455_ros2
         std::string product_line;
     };
 
+    struct ImuData
+    {
+        float acc_x, acc_y, acc_z;
+        float ang_x, ang_y, ang_z;
+    };
+
     class RealSense
     {
         public:
@@ -27,6 +33,7 @@ namespace rs_d455_ros2
         rs2::context ctx_;
         rs2::pipeline pipe_;
         rs2::device_list devices_;
+        ImuData imu_data;
         const int width_ = 640;
         const int height_ = 480;
         const int fps_ = 60;

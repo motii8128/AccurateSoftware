@@ -15,12 +15,37 @@ namespace rs_d455_ros2
                 rs2::config cfg;
                 cfg.disable_all_streams();
                 cfg.enable_stream(RS2_STREAM_COLOR, width_, height_, RS2_FORMAT_BGR8, fps_);
-                // cfg.enable_stream(RS2_STREAM_INFRARED, 640, 480, RS2_FORMAT_BGR8, 30);
-                // cfg.enable_stream(RS2_STREAM_DEPTH, width_, height_, RS2_FORMAT_Z16, fps_);
                 cfg.enable_stream(RS2_STREAM_ACCEL, RS2_FORMAT_MOTION_XYZ32F);
                 cfg.enable_stream(RS2_STREAM_GYRO, RS2_FORMAT_MOTION_XYZ32F);
                 // cfg.enable_device(std::string(devices_[0].get_info(RS2_CAMERA_INFO_SERIAL_NUMBER)));
-                pipe_.start(cfg);
+
+                auto profile = pipe_.start(cfg, [&](rs2::frame f){
+                    
+                    auto motion = f.as<rs2::motion_frame>();
+
+                    if (motion && motion.get_profile().stream_type() == RS2_STREAM_GYRO && motion.get_profile().format() == RS2_FORMAT_MOTION_XYZ32F)
+                    {
+                        // Get the timestamp of the current frame
+                        double ts = motion.get_timestamp();
+                        // Get gyro measures
+                        rs2_vector gyro_data = motion.get_motion_data();
+
+                        imu_data.ang_x = gyro_data.x;
+                        imu_data.ang_y = gyro_data.y;
+                        imu_data.ang_z = gyro_data.z;
+                        // Call function that computes the angle of motion based on the retrieved measures
+                    }
+                    // If casting succeeded and the arrived frame is from accelerometer stream
+                    if (motion && motion.get_profile().stream_type() == RS2_STREAM_ACCEL && motion.get_profile().format() == RS2_FORMAT_MOTION_XYZ32F)
+                    {
+                        // Get accelerometer measures
+                        rs2_vector accel_data = motion.get_motion_data();
+                        // Call function that computes the angle of motion based on the retrieved measures
+                        imu_data.acc_x = accel_data.x;
+                        imu_data.acc_y = accel_data.y;
+                        imu_data.acc_z = accel_data.z;
+                    }
+                });
             }
             catch (const rs2::error& e) {
                 std::cerr << "RealSense error calling " << e.get_failed_function() << "(" << e.get_failed_args() << "):\n    " << e.what() << std::endl;
