@@ -10,7 +10,7 @@ namespace rs_d455_ros2
 
         // sleep(3);
 
-        timer_ = this->create_wall_timer(std::chrono::milliseconds(10), std::bind(&RealSenseD455_ROS2::timer_callback, this));
+        timer_ = this->create_wall_timer(std::chrono::milliseconds(50), std::bind(&RealSenseD455_ROS2::timer_callback, this));
 
         const auto device_info = realsense_->getDeviceInfo();
 
