@@ -9,6 +9,7 @@ namespace rs_d455_ros2
         {
             try
             {
+                pipe_ = rs2::pipeline(ctx_);
                 auto dev = devices_[0];
                 dev.hardware_reset();                
                 rs2::config cfg;
