@@ -28,7 +28,7 @@ namespace rs_d455_ros2
                 }
                 if(is_acc && is_gyro)
                 {
-
+                    throw std::runtime_error("IMU is supported.");
                 }
                 else
                 {
