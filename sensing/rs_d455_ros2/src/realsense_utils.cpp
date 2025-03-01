@@ -10,7 +10,7 @@ namespace rs_d455_ros2
             try
             {
                 pipe_ = rs2::pipeline(ctx_);
-                auto dev = devices_[0];
+                auto dev = devices_.front();
                 dev.hardware_reset();                
                 rs2::config cfg;
                 cfg.disable_all_streams();
