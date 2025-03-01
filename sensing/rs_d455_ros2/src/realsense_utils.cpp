@@ -64,27 +64,16 @@ namespace rs_d455_ros2
     {
         rs2::frameset frames = pipe_.wait_for_frames(1000);
 
-        rs2::video_frame color_frame = frames.get_color_frame();
-        rs2::frame f = frames.get();
-        auto motion = f.as<rs2::motion_frame>();
-        if(motion.get_profile().stream_type() == RS2_STREAM_GYRO)
+        for(const auto& frame : frames)
         {
-            rs2_vector gyro_data = motion.get_motion_data();
-            imu_data_.ang_x = gyro_data.x;
-            imu_data_.ang_y = gyro_data.y;
-            imu_data_.ang_z = gyro_data.z;
-        }
-        else if(motion.get_profile().stream_type() == RS2_STREAM_ACCEL)
-        {
-            rs2_vector acc = motion.get_motion_data();
-            imu_data_.acc_x = acc.x;
-            imu_data_.acc_y = acc.y;
-            imu_data_.acc_z = acc.z;
-        }
-
-        cv::Mat image(cv::Size(width_, height_), CV_8UC3, (void*)color_frame.get_data(), cv::Mat::AUTO_STEP);
-
-        image.copyTo(color_image);
+            if(frame.get_profile().stream_type() == RS2_STREAM_COLOR)
+            {
+                auto color_frame = frame.as<rs2::video_frame>();
+                cv::Mat image(cv::Size(width_, height_), CV_8UC3, (void*)color_frame.get_data(), cv::Mat::AUTO_STEP);
+                image.copyTo(color_image);
+            }
+            
+        }   
     }
 
     DeviceInfo RealSense::getDeviceInfo()
