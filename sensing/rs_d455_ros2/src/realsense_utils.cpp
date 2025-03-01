@@ -31,10 +31,7 @@ namespace rs_d455_ros2
                     throw std::runtime_error("IMU is not supported.");
                 }
                 
-                auto dev = devices_[0];
-                dev.hardware_reset();
                 pipe_ = rs2::pipeline(ctx_);
-                
                 rs2::config cfg;
                 cfg.disable_all_streams();
                 cfg.enable_stream(RS2_STREAM_COLOR, width_, height_, RS2_FORMAT_BGR8, fps_);
