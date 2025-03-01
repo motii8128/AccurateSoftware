@@ -40,33 +40,7 @@ namespace rs_d455_ros2
                 // cfg.enable_stream(RS2_STREAM_GYRO, RS2_FORMAT_MOTION_XYZ32F, 200);
                 // cfg.enable_device(std::string(devices_[0].get_info(RS2_CAMERA_INFO_SERIAL_NUMBER)));
 
-                auto profile = pipe_.start(cfg, [&](rs2::frame f){
-                    
-                    auto motion = f.as<rs2::motion_frame>();
-
-                    if (motion && motion.get_profile().stream_type() == RS2_STREAM_GYRO && motion.get_profile().format() == RS2_FORMAT_MOTION_XYZ32F)
-                    {
-                        // Get the timestamp of the current frame
-                        double ts = motion.get_timestamp();
-                        // Get gyro measures
-                        rs2_vector gyro_data = motion.get_motion_data();
-
-                        imu_data_.ang_x = gyro_data.x;
-                        imu_data_.ang_y = gyro_data.y;
-                        imu_data_.ang_z = gyro_data.z;
-                        // Call function that computes the angle of motion based on the retrieved measures
-                    }
-                    // If casting succeeded and the arrived frame is from accelerometer stream
-                    if (motion && motion.get_profile().stream_type() == RS2_STREAM_ACCEL && motion.get_profile().format() == RS2_FORMAT_MOTION_XYZ32F)
-                    {
-                        // Get accelerometer measures
-                        rs2_vector accel_data = motion.get_motion_data();
-                        // Call function that computes the angle of motion based on the retrieved measures
-                        imu_data_.acc_x = accel_data.x;
-                        imu_data_.acc_y = accel_data.y;
-                        imu_data_.acc_z = accel_data.z;
-                    }
-                });
+                pipe_.start(cfg);
             }
             catch (const rs2::error& e) {
                 std::cerr << "RealSense error calling " << e.get_failed_function() << "(" << e.get_failed_args() << "):\n    " << e.what() << std::endl;
@@ -91,6 +65,22 @@ namespace rs_d455_ros2
         rs2::frameset frames = pipe_.wait_for_frames(1000);
 
         rs2::video_frame color_frame = frames.get_color_frame();
+        rs2::frame f = frames.get();
+        auto motion = f.as<rs2::motion_frame>();
+        if(motion.get_profile().stream_type() == RS2_STREAM_GYRO)
+        {
+            rs2_vector gyro_data = motion.get_motion_data();
+            imu_data_.ang_x = gyro_data.x;
+            imu_data_.ang_y = gyro_data.y;
+            imu_data_.ang_z = gyro_data.z;
+        }
+        else if(motion.get_profile().stream_type() == RS2_STREAM_ACCEL)
+        {
+            rs2_vector acc = motion.get_motion_data();
+            imu_data_.acc_x = acc.x;
+            imu_data_.acc_y = acc.y;
+            imu_data_.acc_z = acc.z;
+        }
 
         cv::Mat image(cv::Size(width_, height_), CV_8UC3, (void*)color_frame.get_data(), cv::Mat::AUTO_STEP);
 
