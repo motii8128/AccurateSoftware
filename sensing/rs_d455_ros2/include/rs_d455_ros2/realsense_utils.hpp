@@ -36,7 +36,7 @@ namespace rs_d455_ros2
         ImuData imu_data;
         const int width_ = 640;
         const int height_ = 480;
-        const int fps_ = 60;
+        const int fps_ = 30;
     };
 
 }
