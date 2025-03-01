@@ -17,8 +17,8 @@ namespace rs_d455_ros2
                 cfg.enable_stream(RS2_STREAM_COLOR, width_, height_, RS2_FORMAT_BGR8, fps_);
                 // cfg.enable_stream(RS2_STREAM_INFRARED, 640, 480, RS2_FORMAT_BGR8, 30);
                 // cfg.enable_stream(RS2_STREAM_DEPTH, width_, height_, RS2_FORMAT_Z16, fps_);
-                // cfg.enable_stream(RS2_STREAM_ACCEL);
-                // cfg.enable_stream(RS2_STREAM_GYRO);
+                cfg.enable_stream(RS2_STREAM_ACCEL, RS2_FORMAT_MOTION_XYZ32F, 63);
+                cfg.enable_stream(RS2_STREAM_GYRO, RS2_FORMAT_MOTION_XYZ32F, 200);
                 // cfg.enable_device(std::string(devices_[0].get_info(RS2_CAMERA_INFO_SERIAL_NUMBER)));
                 pipe_.start(cfg);
             }
@@ -42,7 +42,7 @@ namespace rs_d455_ros2
 
     void RealSense::getColorFrame(cv::Mat& color_image)
     {
-        rs2::frameset frames = pipe_.wait_for_frames();
+        rs2::frameset frames = pipe_.wait_for_frames(1000);
 
         rs2::video_frame color_frame = frames.get_color_frame();
 
