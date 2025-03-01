@@ -3,6 +3,7 @@ project(rs_d455_ros2)
 
 find_package(ament_cmake_auto REQUIRED)
 find_package(realsense2 REQUIRED)
+find_package(cv_bridge REQUIRED)
 ament_auto_find_build_dependencies()
 
 ament_auto_add_library(target_rs_d455_ros2 SHARED
