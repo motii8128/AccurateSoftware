@@ -9,6 +9,31 @@ namespace rs_d455_ros2
         {
             try
             {
+                bool is_gyro, is_acc;
+                is_acc = false;
+                is_gyro = false;
+                for (auto sensor : devices_[0].query_sensors())
+                {
+                    for (auto profile : sensor.get_stream_profiles())
+                    {
+                        if (profile.stream_type() == RS2_STREAM_GYRO)
+                        {
+                            is_gyro = true;
+                        }
+                        if (profile.stream_type() == RS2_STREAM_ACCEL)
+                        {
+                            is_acc = true;
+                        }
+                    }
+                }
+                if(is_acc && is_gyro)
+                {
+
+                }
+                else
+                {
+                    throw std::runtime_error("IMU is not supported.");
+                }
                 
                 pipe_ = rs2::pipeline(ctx_);
      
