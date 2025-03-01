@@ -29,13 +29,15 @@ namespace rs_d455_ros2
         realsense_->getColorFrame(image);
         RCLCPP_INFO(this->get_logger(), "Success!!");
 
-        cv_bridge::CvImagePtr cv_image;
-        cv_image->header.frame_id = "realsense";
-        cv_image->header.stamp = this->get_clock()->now();
-        cv_image->image = image;
-        cv_image->encoding = "bgr8";
+        cv_bridge::CvImage img_bridge;
+        auto header = std_msgs::msg::Header();
+        header.frame_id = "realsense";
+        header.stamp = this->get_clock()->now();
+        img_bridge = cv_bridge::CvImage(header, sensor_msgs::image_encodings::BGR8, image);
+        sensor_msgs::msg::Image img_msg;
+        img_bridge.toImageMsg(img_msg);
 
-        image_publisher_->publish(*cv_image->toImageMsg());
+        image_publisher_->publish(img_msg);
     }
 }
 
