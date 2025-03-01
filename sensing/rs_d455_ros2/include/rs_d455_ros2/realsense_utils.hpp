@@ -28,12 +28,13 @@ namespace rs_d455_ros2
 
         void getColorFrame(cv::Mat& color_image);
         DeviceInfo getDeviceInfo();
+        ImuData getIMU();
 
         private:
         rs2::context ctx_;
         rs2::pipeline pipe_;
         rs2::device_list devices_;
-        ImuData imu_data;
+        ImuData imu_data_;
         const int width_ = 640;
         const int height_ = 480;
         const int fps_ = 30;

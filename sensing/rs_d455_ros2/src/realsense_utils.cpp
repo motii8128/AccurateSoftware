@@ -51,9 +51,9 @@ namespace rs_d455_ros2
                         // Get gyro measures
                         rs2_vector gyro_data = motion.get_motion_data();
 
-                        imu_data.ang_x = gyro_data.x;
-                        imu_data.ang_y = gyro_data.y;
-                        imu_data.ang_z = gyro_data.z;
+                        imu_data_.ang_x = gyro_data.x;
+                        imu_data_.ang_y = gyro_data.y;
+                        imu_data_.ang_z = gyro_data.z;
                         // Call function that computes the angle of motion based on the retrieved measures
                     }
                     // If casting succeeded and the arrived frame is from accelerometer stream
@@ -62,9 +62,9 @@ namespace rs_d455_ros2
                         // Get accelerometer measures
                         rs2_vector accel_data = motion.get_motion_data();
                         // Call function that computes the angle of motion based on the retrieved measures
-                        imu_data.acc_x = accel_data.x;
-                        imu_data.acc_y = accel_data.y;
-                        imu_data.acc_z = accel_data.z;
+                        imu_data_.acc_x = accel_data.x;
+                        imu_data_.acc_y = accel_data.y;
+                        imu_data_.acc_z = accel_data.z;
                     }
                 });
             }
@@ -108,5 +108,9 @@ namespace rs_d455_ros2
         dev_info.usb_type = std::string(dev.get_info(RS2_CAMERA_INFO_USB_TYPE_DESCRIPTOR));
 
         return dev_info;
+    }
+    ImuData RealSense::getIMU()
+    {
+        return imu_data_;
     }
 }
