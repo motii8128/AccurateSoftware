@@ -24,8 +24,10 @@ namespace rs_d455_ros2
 
     void RealSenseD455_ROS2::timer_callback()
     {
+        RCLCPP_INFO(this->get_logger(), "Get Color frame...");
         cv::Mat image;
         realsense_->getColorFrame(image);
+        RCLCPP_INFO(this->get_logger(), "Success!!");
 
         cv_bridge::CvImagePtr cv_image;
         cv_image->header.frame_id = "realsense";
