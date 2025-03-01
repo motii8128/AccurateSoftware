@@ -29,7 +29,7 @@ namespace rs_d455_ros2
         rs2::device_list devices_;
         const int width_ = 640;
         const int height_ = 480;
-        const int fps_ = 15;
+        const int fps_ = 30;
     };
 
 }
