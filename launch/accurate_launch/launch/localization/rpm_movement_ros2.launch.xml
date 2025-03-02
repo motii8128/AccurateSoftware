@@ -1,5 +1,5 @@
 <launch>
-    <node pkg="rpm_movement_ros2" exec="rpm_movement_node">
+    <node pkg="rpm_movement_ros2" exec="rpm_movement_ros2_node">
         <remap from="/rpm/updown" to="/sensing/encode/updown"/>
         <remap from="/rpm/frontback" to="/sensing/encode/frontback"/>
         <remap from="/updown" to="/localization/arm/updown"/>
