@@ -1,7 +1,8 @@
 <launch>
-    <include file="$(find-pkg-share accurate_launch)/launch/localization/encode_odom.launch.xml"/>
+    <!-- <include file="$(find-pkg-share accurate_launch)/launch/localization/encode_odom.launch.xml"/> -->
     <include file="$(find-pkg-share accurate_launch)/launch/localization/motiodom.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/localization/tf.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/localization/accurate_localization.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/localization/stl_visualizer.launch.xml"/>
+    <include file="$(find-pkg-share accurate_launch)/launch/localization/rpm_movement_ros2.launch.xml"/>
 </launch>

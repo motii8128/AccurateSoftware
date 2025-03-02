@@ -8,7 +8,7 @@ using std::placeholders::_1;
 
 namespace rpm_movement_ros2
 {
-    class RpmMovementROS2 : rclcpp::Node
+    class RpmMovementROS2 : public rclcpp::Node
     {
         public:
         explicit RpmMovementROS2(const rclcpp::NodeOptions& options = rclcpp::NodeOptions());
