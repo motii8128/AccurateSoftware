@@ -27,22 +27,38 @@ namespace rpm_movement_ros2
 
     void RpmMovementROS2::frontback_rpm_callback(const std_msgs::msg::Float32::SharedPtr msg)
     {
-        const auto resolution_per_second = msg->data / 60.0;
+        const auto current_time = this->get_clock()->now();
+        if(last_time_fb_.nanoseconds() > 0)
+        {
+            const auto duration = current_time - last_time_fb_;
+            const auto dt = duration.seconds();
 
-        auto send_msg = std_msgs::msg::Float32();
-        send_msg.data = resolution_per_second * frontback_gear_;
-        
-        frontback_movement_pub_->publish(send_msg);
+            const auto fixed_rpm = msg->data / 36.0;
+            const auto resolution_per_second = fixed_rpm / 60.0;
+            auto send_msg = std_msgs::msg::Float32();
+            send_msg.data = resolution_per_second * dt * frontback_gear_;
+
+            frontback_movement_pub_->publish(send_msg);
+        }
+        last_time_fb_ = current_time;
     }
 
     void RpmMovementROS2::updown_rpm_callback(const std_msgs::msg::Float32::SharedPtr msg)
     {
-        const auto resolution_per_second = msg->data / 60.0;
+        const auto current_time = this->get_clock()->now();
+        if(last_time_ud_.nanoseconds() > 0)
+        {
+            const auto duration = current_time - last_time_ud_;
+            const auto dt = duration.seconds();
 
-        auto send_msg = std_msgs::msg::Float32();
-        send_msg.data = resolution_per_second * updown_gear_;
+            const auto fixed_rpm = msg->data / 36.0;
+            const auto resolution_per_second = fixed_rpm / 60.0;
+            auto send_msg = std_msgs::msg::Float32();
+            send_msg.data = resolution_per_second * dt * updown_gear_;
 
-        updown_movement_pub_->publish(send_msg);
+            updown_movement_pub_->publish(send_msg);
+        }
+        last_time_fb_ = current_time;
     }
 }
 

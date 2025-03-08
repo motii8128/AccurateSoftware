@@ -29,7 +29,8 @@ namespace t_mini_pro_ros2
         this->declare_parameter("pointcloud_frame_id", "map");
         this->get_parameter("pointcloud_frame_id", param_frame_id_);
 
-        publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud>("/ydlidar/scan", rclcpp::SystemDefaultsQoS());
+        rclcpp::QoS qos_settings = rclcpp::QoS(rclcpp::KeepLast(10)).best_effort();
+        publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud>("/ydlidar/scan", qos_settings);
         timer_ = this->create_wall_timer(10ms, std::bind(&T_MiniProROS2::timer_callback, this));
 
         RCLCPP_INFO(this->get_logger(), "Start T-Mini Pro ROS2. \nPointCloud frame_id = %s", param_frame_id_.c_str());

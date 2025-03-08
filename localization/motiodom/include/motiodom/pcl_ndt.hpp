@@ -78,8 +78,6 @@ namespace motiodom
             *output = *new_pcl;
         }
 
-        
-
         float voxel_grid_leafsize_;
         float eps_;
         float step_size_;

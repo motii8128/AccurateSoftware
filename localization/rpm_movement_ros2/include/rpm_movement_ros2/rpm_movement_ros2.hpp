@@ -21,6 +21,8 @@ namespace rpm_movement_ros2
         rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr frontback_rpm_sub_;
         rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr updown_movement_pub_;
         rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr frontback_movement_pub_;
+        rclcpp::Time last_time_fb_;
+        rclcpp::Time last_time_ud_;
 
         float updown_gear_, frontback_gear_;
     };
