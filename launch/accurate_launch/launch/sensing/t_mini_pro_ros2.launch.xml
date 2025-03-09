@@ -3,7 +3,7 @@
         <remap from="/ydlidar/scan" to="/sensing/scan"/>
 
         <param name="baudrate" value="230400"/>
-        <param name="enable_reverse" value="false"/>
+        <param name="enable_reverse" value="true"/>
         <param name="pointcloud_frame_id" value="lidar_link"/>
     </node>
 </launch>
