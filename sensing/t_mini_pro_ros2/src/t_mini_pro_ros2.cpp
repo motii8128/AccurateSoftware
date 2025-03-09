@@ -14,6 +14,7 @@ namespace t_mini_pro_ros2
         RCLCPP_INFO(this->get_logger(), "Get parameter.\nbaudrate=%d\nenable_reverse=%d", param_baudrate_, param_reverse_);
 
         ydlidar_ = std::make_shared<YDLidarDriver>(param_baudrate_, param_reverse_);
+        ydlidar_->closeLidar();
         if(ydlidar_->startLidar())
         {
             RCLCPP_INFO(this->get_logger(), "Start YD Lidar");
