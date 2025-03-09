@@ -22,7 +22,7 @@ namespace t_mini_pro_ros2
         bool isSingleChannel = false;
         float frequency = 10.0;
 
-        port_ = std::string("/dev/ttyUSB0");
+        port_ = std::string("/dev/ydlidar");
 
         lidar_->setlidaropt(LidarPropSerialPort, port_.c_str(), port_.size());
 
