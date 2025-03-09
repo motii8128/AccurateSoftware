@@ -7,7 +7,6 @@
 #include <pcl/point_cloud.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/registration/ndt.h>
-#include <pcl/registration/ndt_2d.h>
 #include <pcl/filters/voxel_grid.h>
 
 #include <sensor_msgs/msg/point_cloud.hpp>
