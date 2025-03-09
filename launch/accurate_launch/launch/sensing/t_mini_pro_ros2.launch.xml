@@ -4,6 +4,6 @@
 
         <param name="baudrate" value="230400"/>
         <param name="enable_reverse" value="false"/>
-        <param name="pointcloud_frame_id" value="map"/>
+        <param name="pointcloud_frame_id" value="lidar_link"/>
     </node>
 </launch>

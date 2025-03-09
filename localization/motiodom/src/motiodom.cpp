@@ -13,7 +13,7 @@ namespace motiodom
 
         pointcloud_subscriber_ = this->create_subscription<sensor_msgs::msg::PointCloud>(
             "/pointcloud",
-            qos_settings,
+            rclcpp::SystemDefaultsQoS(),
             std::bind(&MotiOdom::lidar_callback, this, _1)
         );
 
