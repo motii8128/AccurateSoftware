@@ -22,7 +22,7 @@ namespace t_mini_pro_ros2
         bool isSingleChannel = false;
         float frequency = 10.0;
 
-        port_ = std::string("/dev/ydlidar");
+        port_ = std::string("/dev/ttyUSB0");
 
         lidar_->setlidaropt(LidarPropSerialPort, port_.c_str(), port_.size());
 
@@ -79,15 +79,15 @@ namespace t_mini_pro_ros2
             return false;
         }
 
-        float pitch = .0f;
-        if (!lidar_->getPitchAngle(pitch))
-        {
-            return false;
-        }
-        else
-        {
-            pitch_ = pitch;
-        }
+        // float pitch = .0f;
+        // if (!lidar_->getPitchAngle(pitch))
+        // {
+        //     return false;
+        // }
+        // else
+        // {
+        //     pitch_ = pitch;
+        // }
 
         ret = lidar_->turnOn();
         if (!ret) 
