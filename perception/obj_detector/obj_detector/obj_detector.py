@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CompressedImage
 from geometry_msgs.msg import PoseStamped
 import cv2
 from cv_bridge import CvBridge
@@ -20,7 +20,7 @@ class ObjDetector(Node):
             Image, '/image', self.image_callback, 0
         )
 
-        self.img_pub = self.create_publisher(Image, '/detect_img', 10)
+        self.img_pub = self.create_publisher(CompressedImage, '/detect_img', 10)
         self.pose_pub = self.create_publisher(PoseStamped, '/pose', 0)
 
         self.bridge = CvBridge()
@@ -78,7 +78,7 @@ class ObjDetector(Node):
         obj_pose.pose.position.z = 0.0
         self.pose_pub.publish(obj_pose)
         
-        ros_image = self.bridge.cv2_to_imgmsg(cv_image, encoding='bgr8')
+        ros_image = self.bridge.cv2_to_compressed_imgmsg(cv_image, 'bgr8')
         self.img_pub.publish(ros_image)
 
 def main(args=None):
