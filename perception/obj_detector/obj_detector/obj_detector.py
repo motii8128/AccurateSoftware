@@ -9,7 +9,7 @@ import numpy as np
 
 class ObjDetector(Node):
     def __init__(self):
-        super.__init__('obj_detector')
+        super().__init__('obj_detector')
         self.target_txt = 'ball'
 
         self.sub_target_txt = self.create_subscription(
