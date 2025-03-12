@@ -4,8 +4,7 @@ namespace rs_d455_ros2
 {
     RealSenseD455_ROS2::RealSenseD455_ROS2(const rclcpp::NodeOptions& options) : Node("RealSenseD455_ROS2", options)
     {
-        rclcpp::QoS qos_settings = rclcpp::QoS(rclcpp::KeepLast(10)).best_effort();
-        image_publisher_ = this->create_publisher<sensor_msgs::msg::Image>("/realsense/image", qos_settings);
+        image_publisher_ = this->create_publisher<sensor_msgs::msg::Image>("/realsense/image", 10);
 
         realsense_ = std::make_shared<RealSense>();
 
