@@ -6,5 +6,6 @@
     <include file="$(find-pkg-share accurate_launch)/launch/control/arm_cmd_creator.launch.xml"/>
 
     <include file="$(find-pkg-share accurate_launch)/launch/sensing.launch.xml"/>
+    <include file="$(find-pkg-share accurate_launch)/launch/perception.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/localization.launch.xml"/>
 </launch>

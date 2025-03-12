@@ -1,3 +1,4 @@
 <launch>
     <include file="$(find-pkg-share accurate_launch)/launch/perception/near_point_remover.launch.xml"/>
+    <include file="$(find-pkg-share accurate_launch)/launch/perception/obj_detector.launch.xml"/>
 </launch>
