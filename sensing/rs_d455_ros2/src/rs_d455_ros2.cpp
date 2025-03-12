@@ -4,7 +4,8 @@ namespace rs_d455_ros2
 {
     RealSenseD455_ROS2::RealSenseD455_ROS2(const rclcpp::NodeOptions& options) : Node("RealSenseD455_ROS2", options)
     {
-        image_publisher_ = this->create_publisher<sensor_msgs::msg::Image>("/realsense/image", 0);
+        rclcpp::QoS qos_settings = rclcpp::QoS(rclcpp::KeepLast(10)).best_effort();
+        image_publisher_ = this->create_publisher<sensor_msgs::msg::Image>("/realsense/image", qos_settings);
 
         realsense_ = std::make_shared<RealSense>();
 
@@ -27,8 +28,8 @@ namespace rs_d455_ros2
         cv::Mat image;
         realsense_->getColorFrame(image);
         auto imu = realsense_->getIMU();
-        RCLCPP_INFO(this->get_logger(), "Accel: %lf, %lf, %lf", imu.acc_x, imu.acc_y, imu.acc_z);
-        RCLCPP_INFO(this->get_logger(), "Ang: %lf, %lf, %lf", imu.ang_x, imu.ang_y, imu.ang_z);
+        // RCLCPP_INFO(this->get_logger(), "Accel: %lf, %lf, %lf", imu.acc_x, imu.acc_y, imu.acc_z);
+        // RCLCPP_INFO(this->get_logger(), "Ang: %lf, %lf, %lf", imu.ang_x, imu.ang_y, imu.ang_z);
 
         cv_bridge::CvImage img_bridge;
         auto header = std_msgs::msg::Header();
