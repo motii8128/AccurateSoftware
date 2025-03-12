@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="rs_d455_ros2" exec="rs_d455_ros2_node">
+        <remap from="/realsense/image" to="/sensing/image"/>
+    </node>
+</launch>

@@ -1,0 +1,8 @@
+<launch>
+    <node pkg="obj_detector" exec="obj_detector">
+        <remap from="/image" to="/sensing/image"/>
+        <remap from="/target" to="/perception/target_txt"/>
+        <remap from="/detect_img" to="/perception/debug_image"/>
+        <remap from="/pose" to="/perception/obj_pose"/>
+    </node>
+</launch>
