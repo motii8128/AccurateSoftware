@@ -19,7 +19,7 @@ namespace serial_controller
         pub_frontback_encoder_ = this->create_publisher<std_msgs::msg::Float32>("/encoder/frontback", 0);
         pub_hand_ampare_ = this->create_publisher<std_msgs::msg::Float32>("/hand_ampare", 0);
 
-        timer_ = this->create_wall_timer(20ms, std::bind(&SerialController::timer_callback, this));
+        timer_ = this->create_wall_timer(50ms, std::bind(&SerialController::timer_callback, this));
 
         this->declare_parameter("port_path", "/dev/ttyACM0");
         this->get_parameter("port_path", port_path_param_);
@@ -63,9 +63,9 @@ namespace serial_controller
         }
         else
         {
-            const auto w1 = wheel_cmd_->data[0];
-            const auto w2 = wheel_cmd_->data[1];
-            const auto w3 = wheel_cmd_->data[2];
+            w1 = wheel_cmd_->data[0] / 10;
+            w2 = wheel_cmd_->data[1] / 10;
+            w1 = wheel_cmd_->data[2] / 10;
         }
 
         if(machine_cmd_ == nullptr)
@@ -76,13 +76,13 @@ namespace serial_controller
         }
         else
         {
-            m1 = machine_cmd_->data[0];
-            m2 = machine_cmd_->data[1];
-            m3 = machine_cmd_->data[2];
+            m1 = machine_cmd_->data[0] / 10;
+            m2 = machine_cmd_->data[1] / 10;
+            m3 = machine_cmd_->data[2] / 10;
         }
 
-        std::string tx = std::to_string(m1+500) + ',' + std::to_string(m2+500) + ',' + std::to_string(m3+500) + ','
-            + std::to_string(w1+300) + ',' + std::to_string(w2+300) + ',' + std::to_string(w3+300) + 'e';
+        std::string tx = std::to_string(m1+50) + ',' + std::to_string(m2+50) + ',' + std::to_string(m3+50) + ','
+            + std::to_string(w1+30) + ',' + std::to_string(w2+30) + ',' + std::to_string(w3+30) + 'e';
 
         const auto serial_write_result = serial_->WritePort(tx);
         if(serial_write_result)

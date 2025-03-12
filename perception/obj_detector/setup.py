@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'zs_obj_detector'
+package_name = 'obj_detector'
 
 setup(
     name=package_name,
