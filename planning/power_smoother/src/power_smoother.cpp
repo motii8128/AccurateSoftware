@@ -5,7 +5,6 @@ namespace power_smoother
     PowerSmoother::PowerSmoother(const rclcpp::NodeOptions& options) : Node("PowerSmoother", options)
     {
         gain_ = this->declare_parameter("gain", 10);
-        RCLCPP_INFO(this->get_logger(), "Initialize Parameter");
         pub_ = this->create_publisher<std_msgs::msg::Int64MultiArray>("/output", 0);
 
         target_ = nullptr;
@@ -75,3 +74,6 @@ namespace power_smoother
         }
     }
 }
+
+#include <rclcpp_components/register_node_macro.hpp>
+RCLCPP_COMPONENTS_REGISTER_NODE(power_smoother::PowerSmoother)
