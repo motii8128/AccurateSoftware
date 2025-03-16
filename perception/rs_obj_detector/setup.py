@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'obj_detector'
+package_name = 'rs_obj_detector'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'obj_detector = obj_detector.obj_detector:main'
+            'rs_obj_detector = rs_obj_detector.rs_obj_detector:main'
         ],
     },
 )
