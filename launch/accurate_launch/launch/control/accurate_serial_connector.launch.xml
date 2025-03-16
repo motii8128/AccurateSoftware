@@ -1,7 +1,7 @@
 <launch>
     <node pkg="accurate_serial_connector" exec="accurate_serial_connector_node" name="accurate_serial_connector">
-        <remap from="/wheel" to="/control/wheel"/>
-        <remap from="/machine" to="/control/machine"/>
+        <remap from="/wheel" to="/planning/smoothed/wheel"/>
+        <remap from="/machine" to="/planning/smoothed/machine"/>
 
         <remap from="/encoder/updown" to="/sensing/encode/updown"/>
         <remap from="/encoder/frontback" to="/sensing/encode/frontback"/>

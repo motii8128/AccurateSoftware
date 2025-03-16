@@ -1,0 +1,15 @@
+<launch>
+    <node pkg="power_smoother" exec="power_smoother_node" name="wheel_smoother">
+        <remap from="/input" to="/control/wheel"/>
+        <remap from="/output" to="/planning/smoothed/wheel"/>
+
+        <param name="gain" value="10"/>
+    </node>
+
+    <node pkg="power_smoother" exec="power_smoother_node" name="machine_smoother">
+        <remap from="/input" to="/control/machine"/>
+        <remap from="/output" to="/planning/smoothed/machine"/>
+
+        <param name="gain" value="10"/>
+    </node>
+</launch>

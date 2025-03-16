@@ -1,5 +1,7 @@
 <launch>
     <include file="$(find-pkg-share accurate_launch)/launch/control/omni_vel_ros2.launch.xml"/>
+    <!-- <include file="$(find-pkg-share accurate_launch)/launch/control/dualsense_ros2.launch.xml"/> -->
+    <include file="$(find-pkg-share accurate_launch)/launch/control/ros_tcp_endpoint.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/control/accurate_serial_connector.launch.xml"/>
     <include file="$(find-pkg-share accurate_launch)/launch/control/arm_cmd_creator.launch.xml"/>
 </launch>
