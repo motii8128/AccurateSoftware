@@ -1,4 +1,3 @@
-import pyrealsense2.pyrsutils
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
