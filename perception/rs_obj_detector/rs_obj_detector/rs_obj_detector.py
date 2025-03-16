@@ -7,7 +7,7 @@ import cv2
 from cv_bridge import CvBridge
 import numpy as np
 
-import pyrealsense2 as rs
+import pyrealsense2.pyrealsense2 as rs
 
 class RsObjDetector(Node):
     def __init__(self):
