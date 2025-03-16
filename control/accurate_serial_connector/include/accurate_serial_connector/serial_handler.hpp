@@ -11,6 +11,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include <sys/ioctl.h>
+#include <stdint.h>
 
 namespace serial_controller
 {
@@ -21,7 +22,7 @@ namespace serial_controller
 
         bool OpenPort(std::string port_path);
         void ClosePort();
-        bool WritePort(std::string tx);
+        bool WritePort(const uint8_t* tx);
         std::string ReadPort();
 
         private:

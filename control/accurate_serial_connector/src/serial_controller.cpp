@@ -63,9 +63,9 @@ namespace serial_controller
         }
         else
         {
-            w1 = wheel_cmd_->data[0] / 10;
-            w2 = wheel_cmd_->data[1] / 10;
-            w1 = wheel_cmd_->data[2] / 10;
+            w1 = wheel_cmd_->data[0] / 5;
+            w2 = wheel_cmd_->data[1] / 5;
+            w3 = wheel_cmd_->data[2] / 5;
         }
 
         if(machine_cmd_ == nullptr)
@@ -76,15 +76,32 @@ namespace serial_controller
         }
         else
         {
-            m1 = machine_cmd_->data[0] / 10;
-            m2 = machine_cmd_->data[1] / 10;
-            m3 = machine_cmd_->data[2] / 10;
+            m1 = machine_cmd_->data[0];
+            m2 = machine_cmd_->data[1];
+            m3 = machine_cmd_->data[2];
         }
 
-        std::string tx = std::to_string(m1+50) + ',' + std::to_string(m2+50) + ',' + std::to_string(m3+50) + ','
-            + std::to_string(w1+30) + ',' + std::to_string(w2+30) + ',' + std::to_string(w3+30) + 'e';
+        uint8_t buf[6];
+        buf[0] = w1 * 1.27 + 127;
+        buf[1] = w2 * 1.27 + 127;
+        buf[2] = w3 * 1.27 + 127;
+        buf[3] = m1 * 1.27 + 127;
+        buf[4] = m2 * 1.27 + 127;
+        buf[5] = m3 * 1.27 + 127;
+        for(int i = 0; i < 6; i++)
+        {
+            if(buf[i] > 255)
+            {
+                buf[i] = 255;
+            }
+            else if(buf[i] < 0)
+            {
+                buf[i] = 0;
+            }
+        }
 
-        const auto serial_write_result = serial_->WritePort(tx);
+
+        const auto serial_write_result = serial_->WritePort(buf);
         if(serial_write_result)
         {
             const auto read_string = serial_->ReadPort();

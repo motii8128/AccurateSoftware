@@ -37,14 +37,14 @@ namespace serial_controller
         close(fd_);
     }
 
-    bool SerialHandler::WritePort(std::string tx)
+    bool SerialHandler::WritePort(const uint8_t* tx)
     {
         if(fd_ < 0)
         {
             return false;
         }
 
-        int err = write(fd_, tx.c_str(), tx.size());
+        int err = write(fd_, tx, sizeof(tx));
 
         if(err > 0)
         {
