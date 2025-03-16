@@ -1,3 +1,4 @@
+import pyrealsense2.pyrsutils
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
@@ -7,21 +8,25 @@ import cv2
 from cv_bridge import CvBridge
 import numpy as np
 
-class ObjDetector(Node):
+import pyrealsense2 as rs
+
+class RsObjDetector(Node):
     def __init__(self):
-        super().__init__('obj_detector')
+        super().__init__('rs_obj_detector')
         self.target_txt = 'ball'
 
         self.sub_target_txt = self.create_subscription(
             String, '/target', self.target_txt_callback, 0
         )
 
-        self.sub_image = self.create_subscription(
-            Image, '/image', self.image_callback, 0
-        )
+        conf = rs.config()
+        conf.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 60)
+        self.pipe = rs.pipeline()
+        self.pipe.start(conf)
 
         self.img_pub = self.create_publisher(Image, '/detect_img', 10)
         self.pose_pub = self.create_publisher(PoseStamped, '/pose', 0)
+        self.timer = self.create_timer(0.1, self.timer_callback)
 
         self.bridge = CvBridge()
         self.BALL_SIZE = 0.068
@@ -33,8 +38,10 @@ class ObjDetector(Node):
     def target_txt_callback(self, msg):
         self.target_txt = msg.data
 
-    def image_callback(self, msg):
-        cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+    def timer_callback(self):
+        frames = self.pipe.wait_for_frames()
+        color_frame = frames.get_color_frame()
+        cv_image = np.asanyarray(color_frame.get_data())
 
         img_yuv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2YUV)
         clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
@@ -83,7 +90,7 @@ class ObjDetector(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    obj_detector = ObjDetector()
+    obj_detector = RsObjDetector()
     rclpy.spin(obj_detector)
     obj_detector.destroy_node()
     rclpy.shutdown()
