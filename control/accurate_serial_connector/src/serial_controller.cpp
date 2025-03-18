@@ -19,7 +19,7 @@ namespace serial_controller
         pub_frontback_encoder_ = this->create_publisher<std_msgs::msg::Float32>("/encoder/frontback", 0);
         pub_hand_ampare_ = this->create_publisher<std_msgs::msg::Float32>("/hand_ampare", 0);
 
-        timer_ = this->create_wall_timer(20ms, std::bind(&SerialController::timer_callback, this));
+        timer_ = this->create_wall_timer(50ms, std::bind(&SerialController::timer_callback, this));
 
         this->declare_parameter("port_path", "/dev/ttyACM0");
         this->get_parameter("port_path", port_path_param_);
@@ -81,13 +81,14 @@ namespace serial_controller
             m3 = machine_cmd_->data[2];
         }
 
-        uint8_t buf[6];
+        uint8_t buf[7];
         buf[0] = w1 * 1.27 + 127;
         buf[1] = w2 * 1.27 + 127;
         buf[2] = w3 * 1.27 + 127;
         buf[3] = m1 * 1.27 + 127;
         buf[4] = m2 * 1.27 + 127;
         buf[5] = m3 * 1.27 + 127;
+        buf[6] = '\n';
         for(int i = 0; i < 6; i++)
         {
             if(buf[i] > 255)
