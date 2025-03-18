@@ -20,7 +20,7 @@ namespace power_smoother
             std::bind(&PowerSmoother::topic_callback, this, _1)
         );
 
-        timer_ = this->create_wall_timer(std::chrono::milliseconds(20), std::bind(&PowerSmoother::timer_callback, this));
+        timer_ = this->create_wall_timer(std::chrono::milliseconds(50), std::bind(&PowerSmoother::timer_callback, this));
 
         RCLCPP_INFO(this->get_logger(), "Start %s. gain : %d", this->get_name(), gain_);
     }
