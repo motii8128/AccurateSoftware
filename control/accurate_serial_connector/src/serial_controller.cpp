@@ -63,9 +63,9 @@ namespace serial_controller
         }
         else
         {
-            w1 = wheel_cmd_->data[0] / 5;
-            w2 = wheel_cmd_->data[1] / 5;
-            w3 = wheel_cmd_->data[2] / 5;
+            w1 = wheel_cmd_->data[0];
+            w2 = wheel_cmd_->data[1];
+            w3 = wheel_cmd_->data[2];
         }
 
         if(machine_cmd_ == nullptr)
@@ -101,7 +101,7 @@ namespace serial_controller
             }
         }
 
-
+        // RCLCPP_INFO(this->get_logger(), "Write:%d,%d,%d,%d,%d,%d", buf[0],buf[1],buf[2],buf[3],buf[4],buf[5],buf[6]);
         const auto serial_write_result = serial_->WritePort(buf);
         if(serial_write_result)
         {

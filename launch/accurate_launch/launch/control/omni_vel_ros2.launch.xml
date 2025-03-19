@@ -3,11 +3,11 @@
         <remap from="/cmd_vel" to="/planning/cmd_vel"/>
         <remap from="/target_output" to="/control/wheel"/>
 
-        <param name="robot_radius" value="0.25"/>
+        <param name="robot_radius" value="1.0"/>
         <param name="wheel_radius" value="0.1"/>
-        <param name="wheel_rad_1" value="330.0"/>
-        <param name="wheel_rad_2" value="90.0"/>
-        <param name="wheel_rad_3" value="210.0"/>
+        <param name="wheel_rad_1" value="150.0"/>
+        <param name="wheel_rad_2" value="30.0"/>
+        <param name="wheel_rad_3" value="270.0"/>
         <param name="pwm_mode" value="true"/>
     </node>
 </launch>

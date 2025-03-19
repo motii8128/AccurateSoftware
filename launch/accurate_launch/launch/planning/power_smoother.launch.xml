@@ -10,6 +10,6 @@
         <remap from="/input" to="/control/machine"/>
         <remap from="/output" to="/planning/smoothed/machine"/>
 
-        <param name="gain" value="20"/>
+        <param name="gain" value="100"/>
     </node>
 </launch>
