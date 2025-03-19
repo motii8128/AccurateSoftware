@@ -24,6 +24,7 @@ namespace serial_controller
         void ClosePort();
         bool WritePort(const uint8_t* tx);
         std::string ReadPort();
+        void ClearBuffer();
 
         private:
         int fd_;

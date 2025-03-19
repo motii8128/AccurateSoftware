@@ -77,4 +77,11 @@ namespace serial_controller
             return std::string(buf);
         }
     }
+
+    void SerialHandler::ClearBuffer()
+    {
+        if (fd_ >= 0) {
+            tcflush(fd_, TCIOFLUSH);
+        }
+    }
 }

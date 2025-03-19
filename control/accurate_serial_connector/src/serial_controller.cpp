@@ -105,6 +105,7 @@ namespace serial_controller
         const auto serial_write_result = serial_->WritePort(buf);
         if(serial_write_result)
         {
+            serial_->ClearBuffer();
             const auto read_string = serial_->ReadPort();
             RCLCPP_INFO(this->get_logger(), "Read: %s", read_string.c_str());
 
