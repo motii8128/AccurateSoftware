@@ -101,11 +101,10 @@ namespace serial_controller
             }
         }
 
-        // RCLCPP_INFO(this->get_logger(), "Write:%d,%d,%d,%d,%d,%d", buf[0],buf[1],buf[2],buf[3],buf[4],buf[5],buf[6]);
+        serial_->ClearBuffer();
         const auto serial_write_result = serial_->WritePort(buf);
         if(serial_write_result)
         {
-            serial_->ClearBuffer();
             const auto read_string = serial_->ReadPort();
             RCLCPP_INFO(this->get_logger(), "Read: %s", read_string.c_str());
 

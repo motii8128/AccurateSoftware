@@ -36,7 +36,7 @@ namespace omni_vel_ros2
 
     void OmniVelROS2::cmd_callback(const geometry_msgs::msg::Twist::SharedPtr msg)
     {
-        auto target_rpm = omni_wheel->calculation(msg->linear.x, msg->linear.y, -1.0*msg->angular.z);
+        auto target_rpm = omni_wheel->calculation(-1.0*msg->linear.x, msg->linear.y, -1.0*msg->angular.z);
 
         auto new_msg = std_msgs::msg::Int64MultiArray();
         new_msg.data.push_back(static_cast<int64_t>(target_rpm[0]));
