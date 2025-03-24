@@ -76,9 +76,9 @@ namespace serial_controller
         }
         else
         {
-            m1 = machine_cmd_->data[0];
-            m2 = machine_cmd_->data[1];
-            m3 = machine_cmd_->data[2];
+            m1 = machine_cmd_->data[0] / 5;
+            m2 = machine_cmd_->data[1] / 5;
+            m3 = machine_cmd_->data[2] / 5;
         }
 
         uint8_t buf[7];
@@ -102,11 +102,12 @@ namespace serial_controller
         }
 
         serial_->ClearBuffer();
+        RCLCPP_INFO(this->get_logger(), "Write: %d,%d,%d,%d,%d,%d", buf[0],buf[1],buf[2],buf[3],buf[4],buf[5]);
         const auto serial_write_result = serial_->WritePort(buf);
         if(serial_write_result)
         {
             const auto read_string = serial_->ReadPort();
-            RCLCPP_INFO(this->get_logger(), "Read: %s", read_string.c_str());
+            // RCLCPP_INFO(this->get_logger(), "Read: %s", read_string.c_str());
 
             std::vector<int> values;
             std::stringstream ss(read_string);
